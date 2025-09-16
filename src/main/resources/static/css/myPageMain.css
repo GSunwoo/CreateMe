@@ -1,0 +1,170 @@
+/* 전체 레이아웃 */
+.mypage-wrapper { 
+  padding: 24px 0;
+  background: #f6f7f9;   /* 연한 배경으로 메인 패널이 가운데 떠 보이게 */
+  margin-top: 150px;
+}
+
+/* 사이드바 + 메인 영역 가로 배치 */
+.sub-content{
+  display: flex;
+  gap: 24px;             /* 사이 간격 */
+  align-items: flex-start;
+  max-width: 1200px;     /* 페이지 전체 최대 폭 */
+  margin: 0 auto;        /* 화면 가운데 정렬 */
+  padding: 0 16px;
+}
+
+/* header2.jsp(사이드바) 박스가 너무 넓지 않게 */
+.sub-content .left-sidebar,
+.sub-content .mypage-sidebar,
+.sub-content aside,
+.sub-content .side-bar { /* ⭐️ 이 부분을 추가합니다. */
+  width: 240px;
+  flex: 0 0 240px;
+}
+
+/* 메인 컨테이너: 남는 공간 전부 차지 */
+.mypage-main-cont{
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  justify-content: center;     /* 내부 메인 패널을 가운데로 */
+}
+
+/* 실제 가운데 카드(패널) */
+.mypage-main-info{
+  width: 100%;
+  max-width: 960px;           /* 메인 패널 최대 폭 (원하면 880~1100 사이로 조절) */
+  background: #fff;
+  border: 1px solid #e9eef3;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(0,0,0,.05);
+  padding: 24px;
+}
+
+/* 섹션 간격 */
+.mypage-main-info-cont + .mypage-main-info-cont{
+  margin-top: 28px;
+}
+
+/* 타이틀 스타일 */
+.mypage-main-info-cont > h2{
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 20px;
+  margin: 0 0 12px;
+}
+.order-info-subtext{
+  font-size: 13px;
+  color: #6b7684;
+}
+
+/* 테이블 공통 */
+.mypage-main-table-type table{
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+.mypage-main-table-type thead th{
+  background: #f2f5f9;
+  color: #333;
+  font-weight: 600;
+  border-bottom: 1px solid #e5e8eb;
+  padding: 12px 10px;
+  text-align: center;
+}
+.mypage-main-table-type tbody td{
+  border-bottom: 1px solid #eef2f6;
+  padding: 14px 10px;
+  vertical-align: middle;
+}
+.mypage-main-table-type td p{
+  margin: 0; color:#7b858e;
+  padding: 24px 0; text-align:center;
+}
+
+/* 반응형 (태블릿/모바일) */
+@media (max-width: 1024px){
+  .sub-content{ gap:16px; }
+  .mypage-main-info{ padding:20px; }
+}
+@media (max-width: 768px){
+  .sub-content{
+    display: block;         /* 세로 스택 */
+    max-width: 640px;
+  }
+  .sub-content .left-sidebar,
+  .sub-content .mypage-sidebar,
+  .sub-content aside{
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  .mypage-main-info{ border-radius: 10px; }
+  .mypage-main-table-type thead{ display: none; } /* 필요 시 모바일 단순화 */
+  .mypage-main-table-type tbody td{ padding:12px 8px; }
+}
+
+/* === 리뷰 레이아웃 빠른 패치 (override) === */
+
+/* 테스트용으로 강제 노출되던 박스 숨김 (레이아웃 깨뜨림 원인) */
+.recent-search-box {
+  display: none !important;
+  position: static !important;
+  z-index: auto !important;
+}
+
+/* 그리드/콘텐츠 여백 정리 */
+.rm-wrap { margin-top: 0; padding: 16px 16px 32px; }
+
+/* 그리드 기본 3열, 너무 좁아지지 않게 */
+.rm-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* 페이지네이션은 기본 중앙 정렬 */
+.rm-pagination{ display:flex; justify-content:center; gap:10px; margin-top:24px; }
+
+/* 비어있을 때 메시지가 왼쪽으로 쏠리지 않도록 */
+.rm-empty, .rm-error{
+  display:inline-block; padding:8px 12px; border-radius:12px; background:#fff; border:1px solid #eee;
+}
+
+/* 마이페이지 메인 컨테이너가 배경/보더로 눌러붙는 느낌 방지(필요 시) */
+.mypage-cont { background: transparent; border: 0; padding: 0; }
+
+.mypage-sidebar .sub-menu-mypage > li {
+  font-weight: bold; /* 폰트 굵기를 굵게 설정 */
+}
+
+/* 레이아웃 */
+.sub-content{
+  display:flex;
+  gap:24px;
+  align-items:flex-start;
+  max-width:1200px;
+  margin:0 auto;
+  padding:0 16px;
+}
+
+/* 사이드바 폭 고정 */
+.sub-content .mypage-sidebar{
+  width:240px;
+  flex:0 0 240px;
+}
+
+/* 메인 영역은 나머지 */
+.mypage-main-cont{
+  flex:1 1 auto;
+  min-width:0;
+  display:flex;
+  justify-content:center;
+}
+
+/* (선택) 사이드 메뉴 기본 정리 */
+.mypage-sidebar ul{ list-style:none; margin:0; padding:0; }
+.mypage-sidebar a{ display:block; padding:6px 10px; text-decoration:none; color:#333; }
+.mypage-sidebar a:hover{ background:#f6f7f9; }

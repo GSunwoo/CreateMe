@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.farm.service.IMypageService">
+	<!--             구매자용 DAO                   -->
+	<!-- 해당 멤버의 결제완료된 구매건수 -->
+	<select id="getOrderCnt"
+		resultType="int">
+		SELECT COUNT(*)
+			FROM purchase 
+			WHERE 
+				member_id = #{member_id} AND
+				purc_cmpl = 1
+	</select>
+	<!-- 해당 멤버가 작성한 리뷰 수 -->
+	<select id="getReviewCnt"
+		resultType="int">
+		SELECT COUNT(*)
+			FROM review 
+			WHERE 
+				member_id = #{member_id}
+	</select>
+	<!-- 해당 멤버가 작성한 문의 수 -->
+	<select id="getInquiryCnt"
+		resultType="int">
+		SELECT COUNT(*)
+			FROM inquiry 
+			WHERE 
+				member_id = #{member_id}
+	</select>
+	
+	<!--             판매자용 DAO                   -->
+	<!-- 판매자에게 들어온 문의수 -->
+	<select id="getInquiryCnt_Seller"
+		resultType="int">
+		SELECT COUNT(*)
+			FROM inquiry 
+			INNER JOIN product
+				ON inquiry.prod_id=product.prod_id
+			INNER JOIN member
+				ON product.member_id=member.member_id
+			WHERE product.member_id=#{member_id}
+	</select>
+	<!-- 지난 5일간 판매량-->
+	<select id="getSoldNum"
+		resultType="int">
+		SELECT COUNT(*)
+			FROM purchase pu
+			INNER JOIN product pr
+				ON pu.prod_id=pr.prod_id
+			WHERE pr.member_id=#{member_id} AND
+				TRUNC(pu.purc_date) = #{date, jdbcType=DATE}
+	</select>
+	<!-- 지난 5일간 매출 -->
+	<select id="getSales"
+		resultType="int">
+		SELECT SUM(pr.prod_price)
+			FROM purchase pu
+			INNER JOIN product pr
+				ON pu.prod_id=pr.prod_id
+			WHERE pr.member_id=#{member_id} AND
+				TRUNC(pu.purc_date) = #{date, jdbcType=DATE}
+	</select>
+	<!-- 판매자가 등록한 상품 -->
+	<select id="getMyProducts"
+		resultType="com.farm.dto.ProductDTO">
+		<!-- SELECT  -->
+		SELECT *
+			FROM product
+			WHERE member_id=#{member_id}
+			ORDER BY prod_date DESC
+	</select>
+
+	<!-- 판매자의 상품에 등록된 리뷰 -->
+	<select id="getMyReviews"
+		resultType="com.farm.dto.ReviewBoardDTO">
+		<!-- SELECT re.review_id, re.member_id, re.postdate, re.title, re.content, re.star, 
+				    re.evaluation, re.review_like, re.prod_id, pr.prod_name, mb.name -->
+		SELECT re.review_id, re.member_id, re.postdate, re.title, re.content, re.star, 
+			   re.evaluation, re.review_like, re.prod_id
+			FROM review re
+			INNER JOIN product pr
+				ON re.prod_id=pr.prod_id
+			INNER JOIN member mb
+				ON re.member_id=mb.member_id
+			WHERE pr.member_id=#{member_id}
+	</select>
+
+	<update id="updateState">
+		UPDATE purchase
+		SET purc_state=#{next}
+		WHERE purc_id=#{purc_id}
+	</update>
+	
+	
+</mapper>

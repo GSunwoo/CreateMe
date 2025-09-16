@@ -1,0 +1,180 @@
+/* ===========================
+   Review Management (buyer)
+   =========================== */
+
+/* 레이아웃: 좌 260px 사이드바, 우 본문 */
+.sub-content{
+  display: grid !important;
+  grid-template-columns: 260px minmax(0, 1fr) !important;
+  column-gap: 24px !important;
+  align-items: start !important;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* 가운데 카드 패널 */
+.sub-content .container{
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0;
+  background: #fff;
+  border: 1px solid #e9eef3;
+  border-radius: 16px;
+  padding: 24px 28px;
+  box-shadow: 0 12px 28px rgba(0,0,0,.06);
+}
+
+/* 제목 */
+.sub-content .container > h2{
+  margin: 0 0 16px;
+  font-size: 22px;
+  font-weight: 800;
+  color: #111;
+}
+.sub-content .container > h2::after{ content: none !important; }
+
+/* 테이블 래퍼 */
+.sub-content .review-table-container{
+  margin-top: 6px;
+  overflow-x: auto;
+  position: relative;
+}
+.sub-content .review-table-container::after{
+  content:"";
+  display:block;
+  height:1px;
+  background:#edf1f5;
+  margin-top: 16px;
+}
+
+/* 테이블 기본 */
+.sub-content .review-table-container table{
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  font-size: 15px;
+  table-layout: fixed; /* colgroup 비율 고정 */
+}
+
+/* 헤더 */
+.sub-content .review-table-container thead th{
+  padding: 14px 16px;
+  text-align: left;
+  font-weight: 700;
+  color: #263442;
+  background: #eef4fb;
+  border-bottom: 1px solid #e3ebf4;
+  white-space: nowrap;
+}
+.sub-content .review-table-container thead th:first-child{ border-top-left-radius: 10px; }
+.sub-content .review-table-container thead th:last-child{  border-top-right-radius: 10px; }
+
+/* 본문 셀 */
+.sub-content .review-table-container tbody td{
+  padding: 14px 16px;
+  color: #333;
+  border-bottom: 1px solid #eef1f5;
+  vertical-align: middle;
+  word-break: break-word;
+}
+
+/* 행 hover */
+.sub-content .review-table-container tbody tr:hover td{
+  background: #fbfdff;
+}
+
+/* 데이터 없을 때 */
+.sub-content .review-table-container .no-data{
+  text-align: left;
+  color: #7d8694;
+  padding: 22px 16px;
+  border-bottom: none;
+}
+
+/* 썸네일(이미지) */
+.sub-content .review-thumb{
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #eee;
+  display: block;
+  margin: 0 auto;
+}
+.sub-content .no-image{
+  display: block;
+  margin: 0 auto;
+  min-width: 96px;
+  min-height: 24px;
+  padding: 6px 10px;
+  border: 1px dashed #cfd6dd;
+  border-radius: 8px;
+  color: #95a0ad;
+  background: #fafcfe;
+}
+
+/* 제목/내용 말줄임 설정 */
+.sub-content .review-table-container tbody td:nth-child(2){ /* 제목 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sub-content .review-table-container tbody td:nth-child(3){ /* 내용 */
+  overflow: hidden;
+  line-height: 1.45;
+  text-align: center;
+}
+
+/* 상품이미지 칸(td) */
+.sub-content .review-table-container tbody td:first-child {
+  text-align: center;        /* 가로 가운데 */
+  vertical-align: middle;    /* 세로 가운데 */
+}
+
+/* 날짜 컬럼 타임 태그 */
+.sub-content .review-table-container time{
+  color: #556270;
+  font-size: 14px;
+}
+
+/* === 컬럼 폭: JSP colgroup(35/15/35/15)에 맞춤 === */
+.sub-content .review-table-container colgroup col:nth-child(1){ width:35% !important; }
+.sub-content .review-table-container colgroup col:nth-child(2){ width:15% !important; }
+.sub-content .review-table-container colgroup col:nth-child(3){ width:35% !important; }
+.sub-content .review-table-container colgroup col:nth-child(4){ width:15% !important; }
+
+/* 태블릿 이하 */
+@media (max-width: 992px){
+  .sub-content{ padding: 0 12px; }
+  .sub-content .container{ padding: 18px; }
+
+  /* 모바일에선 이미지 크기 축소 */
+  .sub-content .review-thumb{ width: 72px; height: 72px; }
+
+  /* 내용 줄수 1줄로 축소 */
+  .sub-content .review-table-container tbody td:nth-child(3){
+    -webkit-line-clamp: 1;
+    max-height: calc(1.45em * 1);
+  }
+}
+
+/* 작은 모바일 */
+@media (max-width: 640px){
+  /* 날짜를 조금 더 좁히고 제목/내용 가중치 올림 */
+  .sub-content .review-table-container colgroup col:nth-child(1){ width:32% !important; }
+  .sub-content .review-table-container colgroup col:nth-child(2){ width:18% !important; }
+  .sub-content .review-table-container colgroup col:nth-child(3){ width:35% !important; }
+  .sub-content .review-table-container colgroup col:nth-child(4){ width:15% !important; }
+
+  .sub-content .review-table-container thead th,
+  .sub-content .review-table-container tbody td{ padding: 12px; }
+}
+
+.sub-content .review-table-container tbody tr > td:first-child{
+  display: flex !important;           /* ⬅️ 플렉스 컨테이너로 변경 */
+  align-items: center !important;     /* ⬅️ 세로 중앙정렬 */
+  justify-content: center !important; /* ⬅️ 가로 중앙정렬 */
+  text-align: center !important;      /* ⬅️ fallback */
+}

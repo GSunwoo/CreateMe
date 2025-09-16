@@ -1,0 +1,250 @@
+/* .seller-update-section .form-wrapper {
+  width: 640px;
+  margin: 40px auto;
+  padding: 32px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+} */
+/* 판매자 정보 변경 신청 박스 외곽 카드 스타일 */
+.seller-update-section .form-wrapper {
+	background-color: #fff; /* 흰 배경 */
+	border: 1px solid #ddd; /* 연한 회색 테두리 */
+	border-radius: 12px; /* 모서리 둥글게 */
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06); /* 부드러운 그림자 */
+	padding: 32px; /* 내부 여백 */
+}
+
+/* 전체 래퍼를 가로 배치 */
+.mypage-wrapper {
+	display: flex;
+	align-items: flex-start;
+	gap: 24px; /* 메뉴와 폼 사이 간격 */
+}
+
+/* 폼 영역 확장 */
+.seller-update-section .form-wrapper {
+	width: auto; /* 고정 폭 해제 */
+	flex: 1; /* 남은 공간 전부 사용 */
+	margin: 0; /* 중앙 정렬 해제 */
+}
+
+.seller-update-section .form-line {
+	display: flex;
+	border-bottom: 1px solid #ddd;
+	min-height: 56px;
+}
+
+.seller-update-section .form-line label {
+	width: 150px;
+	background-color: #f2f2f2;
+	color: #333;
+	font-weight: bold;
+	padding: 14px 12px;
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	border-right: 1px solid #ddd;
+}
+
+.seller-update-section .form-group {
+	flex: 1;
+	padding: 12px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	align-items: center;
+	background-color: #fff;
+}
+
+.seller-update-section input[type="text"], .seller-update-section select
+	{
+	padding: 8px 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: 14px;
+	min-width: 100px;
+}
+
+.seller-update-section input[readonly], .seller-update-section .readonly
+	{
+	background: #f7f7f7;
+	cursor: not-allowed;
+}
+
+.seller-update-section button {
+	padding: 8px 16px;
+	background-color: #2d8cf0;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	font-weight: bold;
+	cursor: pointer;
+	
+}
+
+.seller-update-section button:hover {
+	background-color: #1a73e8;
+}
+
+.seller-update-section .half-width {
+	width: 100px;
+}
+
+.seller-update-section .account-group select {
+	min-width: 120px;
+}
+
+.seller-update-section .submit-area {
+	text-align: center;
+	margin-top: 30px;
+}
+
+.seller-update-section .submit-btn {
+	margin-top: 20px; /* 위쪽 간격 */
+	padding: 12px 32px;
+	font-size: 16px;
+	background-color: #2d8cf0;
+	color: white;
+	border: none;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+.seller-update-section .submit-btn:disabled {
+	background-color: #ccc;
+	cursor: not-allowed;
+}
+
+.seller-update-section .section-divider-top {
+	border-top: 2px solid #999;
+}
+
+.seller-update-section .section-divider-bottom {
+	border-bottom: 2px solid #999;
+}
+
+/* 신청 버튼 감싸는 form에 적용 */
+#sellerUpdateForm {
+	text-align: center; /* 버튼을 중앙 정렬 */
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  flex: 1;               /* ✅ 좌측 label 외 모든 공간 사용 */
+  padding: 12px 14px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 0;
+  box-sizing: border-box;
+}
+
+/* 등록 버튼 그룹 중앙 정렬 */
+.button-group {
+  display: flex;
+  justify-content: center; /* ✅ 수평 중앙 정렬 */
+  margin-top: 20px;        /* 위쪽 여백 */
+}
+
+.button-group button {
+  padding: 10px 25px;
+  font-size: 16px;
+  background-color: #2d8cf0;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.button-group button:hover {
+  background-color: #1a73e8;
+}
+
+/* ================== 수동 너비 조절(픽셀 고정) ================== */
+/* 원하는 값으로 숫자만 바꾸면 됩니다 */
+.seller-update-section{
+  --label-w: 170px;   /* 왼쪽 라벨 칸 */
+  --field-w: 620px;   /* 오른쪽 입력 칸(전체 행 폭 아님) */
+  --zip-w:   140px;   /* 우편번호 입력칸 */
+}
+
+.seller-update-section .form-line{
+  display:flex;
+  align-items: stretch;
+}
+
+/* 라벨 폭을 고정 */
+.seller-update-section .form-line > label{
+  width: var(--label-w) !important;
+}
+
+/* 오른쪽 입력 영역 폭을 고정(‘살짝 넓히기’는 --field-w 값만 +10~+40px씩 조절) */
+.seller-update-section .form-line .form-group{
+  flex: 0 0 var(--field-w) !important;
+  max-width: var(--field-w) !important;
+}
+
+/* 입력요소들은 그룹 폭을 꽉 채우도록 */
+.seller-update-section .form-group > input[type="text"],
+.seller-update-section .form-group > select,
+.seller-update-section .form-group > textarea{
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 주소 줄(우편번호/기본주소/상세주소) – 보기 좋게 배치 */
+#zipcode{ width: var(--zip-w); }
+#address{ flex: 1 1 auto; min-width: calc(var(--field-w) - var(--zip-w) - 16px); }
+#detailAddress{ flex: 1 1 100%; }   /* 다음 줄로 떨어지며 전체 폭 사용 */
+
+/* 계좌 줄 – 은행 셀렉트는 고정, 계좌번호는 나머지 */
+.account-group select{ width: 160px; }
+.account-group #accountNumber{ flex: 1 1 auto; }
+
+/* 화면이 좁아지면 자동(유동) 레이아웃로 복귀 */
+@media (max-width: 1024px){
+  .seller-update-section .form-line .form-group{
+    flex: 1 1 auto !important;
+    max-width: 100% !important;
+  }
+}
+
+/* 가로 갤러리 + 가운데 정렬 */
+#previewContainer{
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px;
+  align-items:flex-start;
+  justify-content:center;   /* ✅ 전체 가운데 정렬 */
+}
+
+/* 각 항목: 세로 스택(이미지 → 라디오 → 삭제), 내부도 중앙정렬 */
+#previewContainer > *{
+  display:flex;
+  flex-direction:column;
+  align-items:center;        /* ✅ 항목 내부 가운데 */
+  gap:8px;
+  width:140px;               /* 필요시 조절 */
+}
+
+/* 썸네일 */
+#previewContainer > * img{
+  width:120px; height:120px;
+  object-fit:cover;
+  border-radius:8px;
+  border:1px solid #e5e7eb;
+  display:block;
+}
+
+/* 라디오/버튼 */
+#previewContainer > * input[type="radio"]{ margin-top:4px; }
+#previewContainer > * button{
+  padding:6px 10px;
+  border-radius:6px;
+  width:80px;                /* 100%로 하면 박스 너비 꽉 채움 */
+  align-self:center;
+}

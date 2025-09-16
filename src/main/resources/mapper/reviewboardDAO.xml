@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Mybatis 매퍼를 만들기 위한 Doctype 설정 -->
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 컨트롤러가 호출하는 인터페이스 위치를 namespace로 설정 -->
+<mapper namespace="com.farm.service.ReviewBoardService">
+
+	<select id="getTotalCount" resultType="int"
+			parameterType="com.farm.dto.ReviewBoardDTO">
+			
+			SELECT COUNT(*) FROM review
+			
+			<if test="searchKeyword!=null and 
+				!searchKeyword.equals('')"> 
+			WHERE ${searchField} LIKE '%' || #{searchKeyword} || '%'	
+			</if>
+	</select>
+	
+	<!-- 리스트 -->
+	<select id="listPage"
+	      parameterType="com.farm.dto.PageDTO"
+	      resultType="com.farm.dto.ReviewBoardDTO">
+	      SELECT rev.review_id, rev.member_id, rev.postdate, rev.title, rev.content, rev.star, rev.evaluation, rev.review_like, 
+	      		 rev.prod_id, img.filename, prod_name, rev.purc_id, rev.name
+	      FROM (SELECT Tb.*,  rownum rNum FROM (
+					SELECT re.*, pr.prod_name, m.name
+					FROM review re
+					INNER JOIN product pr
+						ON re.prod_id = pr.prod_id
+					INNER JOIN member m
+						ON re.member_id = m.member_id
+					ORDER BY review_id DESC
+				) Tb
+				WHERE rownum<![CDATA[<=]]>#{end}
+			) rev
+			LEFT JOIN review_img img
+				ON rev.review_id = img.review_id and img.main = 'main'
+			WHERE rNum <![CDATA[>=]]>#{start} 
+	</select>
+
+	<!-- id="" -> 이 SQL의 이름(식별자).자바 코드에서 이걸 호출할 때 view()라고 부름-->
+	<select id="selectView" 
+		parameterType="long"
+		resultType="com.farm.dto.ReviewBoardDTO">
+		<!-- WHERE review_id=#{review_id} BoardDTO 안의 review_id필드를 기준으로
+		해당 글 1개를 조회함 -->
+  		SELECT * FROM review WHERE review_id = #{review_id}
+	</select>
+	<!-- 좋아요 확인 -->
+	<select id="existsLike" resultType="int">
+	    SELECT COUNT(*) FROM review_like 
+	    WHERE review_id = #{reviewId} AND member_id = #{memberId}
+	</select>	
+	
+	<!-- 좋아요 등록 -->
+	<insert id="insertLike">
+		INSERT INTO review_like (review_id, member_id)
+		VALUES (#{reviewId}, #{memberId})
+	</insert>
+	<!-- 좋아요 취소 -->
+	<delete id="deleteLike">
+	    DELETE FROM review_like
+	    WHERE review_id = #{reviewId}
+      	AND member_id = #{memberId}
+ 	 </delete>
+ 	 <!-- 좋아요 카운트 -->
+ 	 <select id="countLike" resultType="int">
+    	SELECT COUNT(*) FROM review_like
+   	 	WHERE review_id = #{reviewId}
+  	 </select>
+  	 
+  	 <delete id="deleteReivew">
+  	 	DELETE FROM review
+  	 	WHERE review_id = #{reviewId}
+  	 </delete>
+	
+	<insert id="write" parameterType="com.farm.dto.ReviewBoardDTO">
+	<selectKey keyProperty="review_id" resultType="long" order="BEFORE">
+		SELECT seq_review_id.nextval FROM dual
+	</selectKey>
+	  INSERT INTO review(review_id, member_id, title, content, star, prod_id, purc_id)
+	  VALUES (#{review_id}, #{member_id}, #{title}, #{content}, #{star}, #{prod_id}, #{purc_id})
+	  
+	</insert>
+	
+	<!-- 특정 구매에 대해 리뷰가 존재하는지 확인 -->
+	<select id="existReview">
+	SELECT COUNT(*)
+	FROM review
+	WHERE purc_id=#{purc_id}
+	</select>
+	
+	<!-- 상품상세페이지랑 연동 -->
+	<select id="loadReview" parameterType="Long"
+		resultType="com.farm.dto.ReviewBoardDTO">
+		SELECT 
+		    rev.postdate,
+			rev.star,
+			rev.member_id,
+			rev.prod_id,
+			rev.review_id,
+			rev.content,
+			rev.title,
+		    img.filename, 
+		    mem.name,
+		    COUNT(li.review_id) AS like_count
+		FROM review rev
+		JOIN review_img img 
+		    ON rev.review_id = img.review_id
+		JOIN member mem 
+		    ON rev.member_id = mem.member_id
+		LEFT JOIN review_like li
+		    ON rev.review_id = li.review_id
+		WHERE rev.prod_id = #{prod_id}
+		GROUP BY rev.postdate,
+				rev.star,
+				rev.member_id,
+				rev.prod_id,
+				rev.review_id,
+				rev.content,
+				rev.title, img.filename, mem.name
+		ORDER BY like_count DESC
+	</select>
+	<select id="selectReviewByMember">
+	SELECT 
+		    rev.postdate,
+			rev.star,
+			rev.member_id,
+			rev.prod_id,
+			rev.review_id,
+			rev.content,
+			rev.title,
+		    img.filename, 
+		    mem.name,
+		    COUNT(li.review_id) AS like_count
+		FROM review rev
+		JOIN review_img img 
+		    ON rev.review_id = img.review_id
+		JOIN member mem 
+		    ON rev.member_id = mem.member_id
+		LEFT JOIN review_like li
+		    ON rev.review_id = li.review_id
+		WHERE rev.member_id = #{member_id}
+		GROUP BY rev.postdate,
+				rev.star,
+				rev.member_id,
+				rev.prod_id,
+				rev.review_id,
+				rev.content,
+				rev.title, img.filename, mem.name
+		ORDER BY rev.postdate DESC
+	</select>
+	
+	<select id="selectReviewBySeller">
+	SELECT 
+		    rev.postdate,
+			rev.star,
+			rev.member_id,
+			rev.prod_id,
+			rev.review_id,
+			rev.content,
+			rev.title,
+		    img.filename, 
+		    mem.name,
+		    COUNT(li.review_id) AS like_count
+		FROM review rev
+		JOIN review_img img 
+		    ON rev.review_id = img.review_id
+		JOIN member mem 
+		    ON rev.member_id = mem.member_id
+		LEFT JOIN review_like li
+		    ON rev.review_id = li.review_id
+		LEFT JOIN product pro
+			ON rev.prod_id = pro.prod_id
+		WHERE pro.member_id = #{member_id}
+		GROUP BY rev.postdate,
+				rev.star,
+				rev.member_id,
+				rev.prod_id,
+				rev.review_id,
+				rev.content,
+				rev.title, img.filename, mem.name
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

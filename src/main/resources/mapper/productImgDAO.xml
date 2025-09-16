@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+   
+<!-- 상품목록의 섬네일이미지는 게시물DAO쪽에서 관리중 -->
+<mapper namespace="com.farm.service.IProductImgService">
+	<insert id="insertImg"
+		parameterType="com.farm.dto.ProductImgDTO">
+		INSERT INTO product_img
+			(prodimg_id, filename, idx, main_idx, prod_id)	
+		VALUES
+			(seq_productimg_id.nextval, #{filename} ,#{idx} , #{main_idx} ,#{prod_id})
+	</insert>
+	
+	<select id="selectImg"
+		parameterType="Long"
+		resultType="com.farm.dto.ProductImgDTO">
+		SELECT prodimg_id, filename, idx, main_idx, prod_id
+			FROM product_img 
+				WHERE prod_id = #{prod_id} and main_idx != 1
+					ORDER BY IDX ASC
+	</select>
+	<select id="selectMain"
+		parameterType="Long"
+		resultType="com.farm.dto.ProductImgDTO">
+		SELECT prodimg_id, filename, idx, main_idx, prod_id
+			FROM product_img 
+				WHERE prod_id = #{prod_id} and main_idx = 1
+	</select>
+	
+	<select id="selectAllImg"
+		parameterType="Long"
+		resultType="com.farm.dto.ProductImgDTO">
+		SELECT prodimg_id, filename, idx, main_idx, prod_id
+			FROM product_img 
+				WHERE prod_id = #{prod_id}
+					ORDER BY IDX ASC
+	</select>
+	
+	<update id="makeZero"
+		parameterType="Long">
+		UPDATE product_img SET
+			main_idx = 0
+			WHERE prod_id = #{prod_id}
+	</update>
+	<update id="updateMainImg"
+		parameterType="Long">
+		UPDATE product_img SET
+			main_idx = 1
+			WHERE prod_id = #{prod_id} AND idx=#{main_idx}
+	</update>
+	
+	<delete id="deleteImg"
+		parameterType="Long">
+		DELETE FROM product_img 
+			WHERE prod_id = #{prod_id} and idx = #{idx}	
+	</delete>
+	<delete id="deleteAllImg"
+		parameterType="Long">
+		DELETE FROM product_img WHERE prod_id = #{prod_id}	
+	</delete>
+</mapper>

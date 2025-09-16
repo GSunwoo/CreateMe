@@ -1,0 +1,183 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>리뷰 홈페이지 메인</title>
+<!-- 필요한 스타일 -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/mainpage.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reviewPage.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/reviewModal.css">
+<!-- 돋보기, 별 css -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="/js/reviewModal.js"></script>
+<script src="/js/reviewInfiniteScroll.js" defer></script>
+<script src="${pageContext.request.contextPath}/js/search.js"></script>
+<!-- <script src="/js/reviewLikeHandler.js" defer></script> -->
+</head>
+
+<body>
+	<%@ include file="../common/header.jsp"%>
+	
+	<section>
+		<div class="review-hero-cont">
+			<div class="rhc-wrapper">
+				<h3>
+					베스트 리뷰
+				</h3>
+			</div>
+
+			 <div class="review-best-items">
+				<c:forEach var="best" items="${bests}" varStatus="status">
+					<c:if test="${status.index < 5}">
+						<div class="review-top-card review-cards"
+						    data-review-id="${best.review_id}"
+							data-star="${best.star}" 
+							data-likes="${best.review_like}"
+							data-evaluation="${best.evaluation}" 
+							data-liked="${best.review_liked ? 'true' : 'false'}"
+							data-content="${best.content}"
+							data-prod-id="${best.prod_id }"
+							>
+							<div class="review-info">
+						 		<div class="review-img">
+									<c:choose>
+										<c:when test="${not empty best.filename}">
+											<img src="${pageContext.request.contextPath}/uploads/reviewimg/${best.review_id}/${best.filename}" alt="${best.title }" />
+										</c:when>
+										<c:otherwise>
+											<img src="${pageContext.request.contextPath}/images/notFound.png" />
+										</c:otherwise>
+									</c:choose>
+								</div>
+								<div class="review-content">
+									<p>${best.content}</p>
+								</div>
+
+								<div class="rating">
+									<c:forEach var="i" begin="1" end="5">
+										<c:choose>
+											<c:when test="${i <= best.star}">
+												<i class="fa-solid fa-star"></i>
+											</c:when>
+											<c:otherwise>
+												<i class="fa-regular fa-star"></i>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+								</div>
+							</div>
+							<div class="review-author">
+								<span class="author"> 
+									<c:choose>
+										<c:when test="${not empty best.name }">
+											${best.name }
+										</c:when>
+										<c:otherwise>
+											회원 ${best.member_id }
+										</c:otherwise>
+									</c:choose>
+								</span>
+
+								<c:choose>
+									<c:when test="${not empty best.postdate}">
+										<time class="review-date" datetime="${best.postdate}">${best.postdate}</time>
+									</c:when>
+									<c:otherwise>
+										<fmt:formatDate value="${best.postdate}" pattern="yyyy-MM-dd"
+											var="isoBest" />
+										<fmt:formatDate value="${best.postdate}" pattern="yyyy년 M월 d일"
+											var="humanBest" />
+										<time class="review-date" datetime="${isoBest}">${humanBest}</time>
+									</c:otherwise>
+								</c:choose>
+							</div>
+						</div>
+					</c:if>
+				</c:forEach>
+			</div>
+		</div>
+	</section> 
+
+	<section>
+			<div class="rhc-wrapper">
+				<h3>
+					일반 리뷰
+				</h3>
+			</div>
+		<div id="review-grid-lists" class="review-grid-lists">
+			<c:forEach var="review" items="${reviewList }">
+				<div class="review-cards" 
+					data-review-id="${review.review_id}"
+					data-star="${review.star}" 
+					data-likes="${review.review_like}"
+					data-evaluation="${review.evaluation}" 
+					data-liked="${review.review_liked ? 'true' : 'false'}"
+					data-content="${review.content}"
+					data-prod-id="${review.prod_id }">
+
+					<div class="review-imgs">
+						<c:choose>
+							<c:when test="${not empty review.filename}">
+								<img src="${pageContext.request.contextPath}/uploads/reviewimg/${review.review_id}/${review.filename}" alt="${review.title }" />
+							</c:when>
+							<c:otherwise>
+								<img src="${pageContext.request.contextPath}/images/notFound.png" />
+							</c:otherwise>
+						</c:choose>
+					</div>
+					<div class="review-bottom-content">
+						<h5 class="review-title">${review.title }</h5>
+						
+					</div>
+
+					<div class="bottom-rating">
+						<c:forEach var="i" begin="1" end="5">
+							<c:choose>
+								<c:when test="${i <= review.star }">
+									<i class="fa-solid fa-star"></i>
+								</c:when>
+								<c:otherwise>
+									<i class="fa-regular fa-star"></i>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</div>
+
+					<div class="review-bottom-author">
+						<span class="author"> <c:choose>
+								<c:when test="${not empty review.name }">
+									${review.name }
+								</c:when>
+								<c:otherwise>
+									회원 ${review.member_id }
+								</c:otherwise>
+							</c:choose>
+						</span>
+
+						<c:choose>
+							<c:when test="${not empty review.postdate }">
+								<time class="review-date" datetime="${review.postdate }">${review.postdate }</time>
+							</c:when>
+							<c:otherwise>
+								<fmt:formatDate value="${review.postdate}" pattern="yyyy-MM-dd"
+									var="iso" />
+								<fmt:formatDate value="${review.postdate}" pattern="yyyy년 M월 d일"
+									var="human" />
+								<time class="review-date" datetime="${iso}">${human}</time>
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</div>
+			</c:forEach>
+			<div id="sentinel" aria-hidden="true"></div>
+		</div>
+	</section>
+
+	<%@ include file="./reviewModal.jsp"%>
+</body>
+</html>

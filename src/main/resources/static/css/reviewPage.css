@@ -1,0 +1,264 @@
+/* ========== 공통 ========== */
+:root{
+  --bg:#fff;
+  --ink:#111;
+  --muted:#666;
+  --line:#e9e9e9;
+  --primary:#2e7d32;      /* 포인트색(필요시 변경) */
+}
+*{box-sizing:border-box}
+img{display:block; max-width:100%; height:auto}
+time{color:var(--muted); font-size:0.9rem}
+
+/* ========== 히어로/베스트 ========== */
+.review-hero-cont{padding:40px 16px 8px; background:#fafafa; border-bottom:1px solid var(--line)}
+.rhc-wrapper{max-width:1200px; margin:0 auto; text-align: center;}
+.rhc-wrapper h3{margin:0; font-size:28px; line-height:1.3; color:var(--ink);}
+.rhc-wrapper p{margin:0; color:var(--muted)}
+.rhc-wrapper:has(+ #review-grid-lists){
+  transform: translateY(60px);
+  text-align: center;
+}
+
+.review-best-items{max-width:1200px; margin:24px auto 32px; padding:0 16px}
+.review-top-card{
+  display:grid; grid-template-columns:180px 1fr; gap:20px;
+  border:1px solid var(--line); border-radius:16px; padding:16px; background:var(--bg);
+  box-shadow:0 1px 6px rgba(0,0,0,.04);
+}
+.review-top-card .review-img{border:1px solid var(--line); background:#f6f6f6; border-radius:12px; overflow:hidden}
+.review-top-card .review-content{margin:4px 0 10px; color:#333}
+.review-top-card .rating i{color:#ffc107}
+.review-top-card .review-author{display:flex; align-items:center; gap:8px; margin-top:4px}
+.review-top-card .author{font-weight:600}
+
+/* ========== 리스트 그리드/카드 ========== */
+#review-grid-lists.review-grid-lists{
+  max-width:1400px; margin:24px auto; padding:0 16px; padding-top: 100px;
+  display:grid; grid-template-columns:repeat(5, 1fr); gap:20px;
+}
+@media (max-width:1100px){ #review-grid-lists.review-grid-lists{grid-template-columns:repeat(3,1fr)} }
+@media (max-width:780px){  #review-grid-lists.review-grid-lists{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:520px){  #review-grid-lists.review-grid-lists{grid-template-columns:1fr} }
+
+.review-cards{
+  border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--bg);
+  transition:transform .15s ease, box-shadow .15s ease;
+  cursor:pointer;
+}
+.review-cards:hover{transform:translateY(-2px); box-shadow:0 6px 16px rgba(0,0,0,.06)}
+
+.review-imgs{aspect-ratio:1/1; background:#f6f6f6; overflow:hidden}
+.review-imgs img{width:100%; height:100%; object-fit:cover}
+
+.review-bottom-content{padding:12px 12px 0}
+.review-title{font-size:16px; font-weight:700; color:var(--ink); margin:0}
+.review-content{font-size:14px; color:#333; margin:0} /* 베스트 영역에서 사용 */
+
+.bottom-rating{padding:8px 12px 0}
+.bottom-rating i{color:#ffc107; margin-right:2px}
+
+.review-bottom-author{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 12px 12px; border-top:1px solid var(--line); margin-top:8px;
+}
+.review-bottom-author .author{font-weight:600; color:var(--ink); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+
+/* 무한스크롤 트리거(눈에 안 띄게) */
+#sentinel{height:1px;}
+
+
+
+.review-hero-cont .review-best-items{
+  /* 기존 크기값은 그대로 두고, 레이아웃만 4열 그리드로 */
+  display:grid;
+  grid-template-columns:repeat(4, minmax(0,1fr));
+  gap:24px;
+}
+
+/* 반응형 (원치 않으면 제거 가능) */
+@media (max-width:1150px){ .review-hero-cont .review-best-items{grid-template-columns:repeat(3,1fr)} }
+@media (max-width:900px) { .review-hero-cont .review-best-items{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:540px) { .review-hero-cont .review-best-items{grid-template-columns:1fr} }
+
+/* 카드 레이아웃: 가로형 → 세로형(이미지 위, 내용 아래) */
+.review-hero-cont .review-best-items .review-top-card{
+  display:flex;                 /* 기존 grid 두 칼럼 무효화 */
+  flex-direction:column;
+  gap:0;
+  padding:0;                    /* 이미지와 겹치지 않게 카드 패딩 제거 */
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 10px 26px rgba(0,0,0,.10);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.review-hero-cont .review-best-items .review-top-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 18px 36px rgba(0,0,0,.14);
+}
+
+/* 상단 이미지 영역 고정 높이 */
+.review-hero-cont .review-best-items .review-top-card .review-img{
+  height:220px;                 /* 200~240px 사이 취향대로 */
+  background:#f3f4f6;
+  border:none;                  /* 기존 테두리 제거 */
+  border-radius:0;
+  overflow:hidden;
+}
+.review-hero-cont .review-best-items .review-top-card .review-img img{
+  width:100%; height:100%; object-fit:cover; display:block;
+}
+
+/* 본문/별점 패딩 및 줄 제한(클램프) */
+.review-hero-cont .review-best-items .review-top-card .review-info{
+  padding:12px 14px 0;
+}
+.review-hero-cont .review-best-items .review-top-card .review-content{
+  margin:0; color:#333;
+}
+.review-hero-cont .review-best-items .review-top-card .review-content p{
+  margin:0;
+  font-size:14px; line-height:1.6;
+  display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:3;
+  overflow:hidden;
+}
+.review-hero-cont .review-best-items .review-top-card .rating{
+  padding:8px 14px 0;
+}
+.review-hero-cont .review-best-items .review-top-card .rating i{
+  color:#ffc107; margin-right:2px; font-size:15px;
+}
+
+/* 하단 작성자/날짜 라인 */
+.review-hero-cont .review-best-items .review-top-card .review-author{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 14px 14px; border-top:1px solid #eee;
+}
+.review-hero-cont .review-best-items .review-top-card .author{
+  font-weight:600; color:#222; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.review-hero-cont .review-best-items .review-top-card time.review-date{
+  color:var(--muted); font-size:12.5px;
+}
+
+/* 베스트 리뷰 타이틀 영역 가운데 정렬 + 위 여백 */
+.review-hero-cont .rhc-wrapper{
+  text-align:center;   /* 텍스트 가운데 정렬 */
+  margin-top:150px;    /* 위쪽 여백 */
+}
+.review-hero-cont .rhc-wrapper h3{
+  font-size:28px;
+  margin-bottom:10px;
+}
+.review-hero-cont .rhc-wrapper p{
+  font-size:15px;
+  color:var(--muted);
+}
+
+/* 베스트: 5열 + 컨테이너 폭 확장 */
+.review-hero-cont .review-best-items{
+  /* 기존 max-width:1200px 을 덮어씀 */
+  max-width: 1600px;               /* 필요시 1500~1680px 사이로 조절 */
+  width: 100%;
+  margin: 24px auto 32px;
+  padding: 0 16px;
+
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));  /* 5개 고정 */
+  gap: 20px;                                         /* 간격 살짝 줄임 */
+}
+
+/* 카드 세로형 유지 + 세로 길이 절약 */
+.review-hero-cont .review-best-items .review-top-card{
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 26px rgba(0,0,0,.10);
+}
+
+/* 이미지 높이도 조금 줄여서 전체 균형 맞추기 */
+.review-hero-cont .review-best-items .review-top-card .review-img{
+  height: 240px;         /* 기존 220px → 200px (190~210 범위 추천) */
+  background: #f3f4f6;
+  border: none;
+  border-radius: 0;
+  overflow: hidden;
+}
+.review-hero-cont .review-best-items .review-top-card .review-img img{
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+
+/* 본문/별점 패딩 축소 + 텍스트 줄 수 줄여 높이 제어 */
+.review-hero-cont .review-best-items .review-top-card .review-info{
+  padding: 16px 18px 10px;
+}
+.review-hero-cont .review-best-items .review-top-card .review-content p{
+  margin: 0;
+  font-size: 14px; line-height: 1.6;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3;  
+  overflow: hidden;
+}
+.review-hero-cont .review-best-items .review-top-card .rating{
+  padding: 10px 18px 0;
+}
+.review-hero-cont .review-best-items .review-top-card .rating i{
+  color: #ffc107; margin-right: 2px; font-size: 15px;
+}
+
+/* 하단 영역도 살짝 컴팩트 */
+.review-hero-cont .review-best-items .review-top-card .review-author{
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 14px 18px 18px;
+  border-top: 1px solid #eee;
+}
+.review-hero-cont .review-best-items .review-top-card .author{
+  font-weight: 600; color: #222; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.review-hero-cont .review-best-items .review-top-card time.review-date{
+  color: var(--muted); font-size: 12.5px;
+}
+
+/* 검색창 전체 컨테이너 */
+.search-box {
+   width: 309px;           /* ✅ 검색창과 드롭다운 동일 너비 */
+  position: relative;     /* 드롭다운 위치 제어용 */
+  margin-left: 350px;  /* ✅ 여기 값으로 위치를 수동 조절 */
+}
+
+/* 검색창 폼 */
+.search-form {
+  display: flex;           /* 버튼과 인풋을 같은 라인에 배치 */
+  align-items: center;     /* 수직 중앙 정렬 */
+  width: 100%;
+  border-bottom: 2px solid #ccc;
+  padding: 4px 0;
+}
+
+/* 검색 입력창 */
+.search-input {
+width: 100%;            /* ✅ 부모 컨테이너에 맞춰 자동 조정 */
+  padding: 10px 40px 10px 10px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+/* 돋보기 버튼 */
+.search-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  padding: 4px;
+  font-size: 18px;
+}
+
+/* 검색창 포커스 시 효과 */
+.search-input:focus {
+  border-bottom: 2px solid #2563eb;
+}

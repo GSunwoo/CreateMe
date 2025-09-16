@@ -1,0 +1,228 @@
+@charset "UTF-8";
+/* ===== 모니터링 카드 상단 ===== */
+.card { border:1px solid #eee; border-radius:12px; padding:16px; background:#fff; }
+.card-full { grid-column: 1 / -1; }
+.card-title { margin:0; font-size:18px; font-weight:700; }
+
+.card-head{
+  display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px;
+}
+
+.monitor-controls { display:flex; gap:8px; }
+.btn {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:8px 12px; border-radius:8px; border:1px solid #d0d7de;
+  background:#fff; color:#333; cursor:pointer; font-weight:600;
+}
+.btn:hover { background:#f6f8fa; }
+.btn-primary { background:#0d6efd; color:#fff; border-color:#0d6efd; }
+.btn-primary:hover { background:#0b5ed7; }
+.btn-light { background:#e9ecef; border-color:#e9ecef; }
+
+/* ===== 상태 표시줄 ===== */
+.monitor-status{
+  display:flex; align-items:center; gap:10px;
+  padding:10px 12px; background:#f8f9fa; border:1px solid #edf0f3; border-radius:10px; margin-bottom:12px;
+}
+.dot{ width:10px; height:10px; display:inline-block; border-radius:999px; }
+.dot.idle{ background:#adb5bd; }
+.dot.live{ background:#28a745; }
+.dot.stopped{ background:#dc3545; }
+.update-time{ margin-left:auto; font-size:12px; color:#666; }
+
+/* ===== 결과 그리드 ===== */
+.monitor-grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap:16px;
+}
+.monitor-status>span{
+	text-align: center;
+}
+@media (max-width: 1024px){ .monitor-grid{ grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px){ .monitor-grid{ grid-template-columns: 1fr; } }
+
+.image-card{
+  position:relative; border:1px solid #eee; border-radius:10px; overflow:hidden; background:#fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.04);
+}
+.image-card img{
+  display:block; width:100%; height:220px; object-fit:cover;
+  background:#fafbfc;
+}
+.badge{
+  position:absolute; left:10px; top:10px;
+  padding:6px 10px; border-radius:999px; font-size:12px; font-weight:700;
+  border:1px solid transparent;
+}
+.badge.ok{ background:#e9f7ef; color:#1e7e34; border-color:#c3e6cb; }
+.badge.ng{ background:#fdecea; color:#a71d2a; border-color:#f5c2c7; }
+
+/* 기존 마이페이지 레이아웃 보강(필요 시) */
+.simple-page .mypage-wrapper{
+  max-width:1200px; margin:24px auto; padding:0 16px;
+  display:grid; grid-template-columns:260px 1fr; gap:24px;
+}
+.simple-page .sub-content{
+  background: #fff; /* 필요 시 배경색 지정 */
+  border: 1px solid #eee; /* 필요 시 테두리 */
+  box-shadow: 0 2px 8px rgba(0,0,0,.04); /* 필요 시 그림자 */
+  padding: 16px; /* 여백 */
+ 
+  width: 100%;   /* 부모 그리드 열을 꽉 채움 */
+  height: 100%;  /* 부모 그리드 행을 꽉 채움 */
+  min-height: 600px; /* 필요 시 최소 높이 지정 */
+  box-sizing: border-box; /* 패딩/테두리 포함 폭 계산 */
+}
+
+/* AI 결과 텍스트 */
+.image-card .ai-result {
+    margin-top: 8px;             /* 이미지와 간격 */
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
+/* 수확 가능 시 스타일 */
+.image-card .ai-result.ok {
+    background-color: #ff6b6b;  /* 기존 컬러 유지 */
+    color: #fff;
+}
+
+/* 아직 성장 중일 시 스타일 */
+.image-card .ai-result.ng {
+    background-color: #e5e5e5;  /* 기존 컬러 유지 */
+    color: #555;
+}
+
+
+
+/* 이미지 컬럼 */
+.img-col .image-card { margin-bottom: 16px; width: 220px; height: 220px; }
+.image-box { width: 220px; height: 220px; overflow: hidden; border-radius: 8px; }
+.image-box img { width: 100%; height: 100%; object-fit: cover; }
+.image-info { margin-top: 6px; font-size: 13px; text-align: center; }
+
+/* 텍스트 컬럼 */
+.txt-col .ai-result {
+  margin-bottom: 12px;
+  font-size: 18px; font-weight: 700; text-align: center;
+  padding: 8px 16px; border-radius: 8px;
+}
+.txt-col .ai-result.ng { background: #ff6b6b; color: #fff; }
+.txt-col .ai-result.ok { background: #8bd145; color: #fff; }
+
+/* monitor-grid 기존 가로 배치가 있으면 덮어쓰기 */
+#imageResult {
+  display: grid;                 /* 가로 → 세로로 전환 */
+  grid-template-areas:
+    "img"
+    "txt";                       /* 이미지 위, 텍스트 아래 */
+  row-gap: 16px;
+  align-items: start;
+}
+
+/* 영역 매핑 */
+#imageResultImg { grid-area: img; }
+#imageResultTxt { grid-area: txt; }
+
+/* 내부 카드 폭 예시 */
+#imageResultImg .image-card { max-width: 240px; margin: 0 auto; }
+#imageResultTxt .ai-result { max-width: 240px; margin: 0 auto; }
+
+/* === 사진/박스 크게: 여기 숫자만 바꾸면 됨 === */
+:root{
+  --monitor-img-w: 520px;   /* ← 원하는 가로폭 (예: 480, 520, 600px) */
+  --monitor-img-ratio: 4 / 3; /* 4:3 비율 (16 / 9 로 바꿔도 OK) */
+}
+
+/* 기존 220px 고정값 무력화 */
+.img-col .image-card { width:auto !important; height:auto !important; }
+#imageResultImg .image-card { max-width: var(--monitor-img-w) !important; margin: 0 auto; }
+#imageResultTxt .ai-result { max-width: var(--monitor-img-w) !important; margin: 0 auto; }
+
+/* 이미지 박스 자체를 한 군데에서만 제어 */
+.image-box{
+  width: var(--monitor-img-w) !important;
+  aspect-ratio: var(--monitor-img-ratio);
+  height: auto !important;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f8f8f8;
+}
+
+/* 이미지는 박스를 꽉 채우기 */
+.image-box img,
+.image-card img{
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  display: block;
+}
+
+/* 이미지 아래 결과 텍스트도 크고 넓게 */
+.image-card .ai-result{
+  margin-top: 12px;
+  padding: 10px 16px;
+  font-size: 18px;         /* 필요하면 20~22px로 */
+  border-radius: 8px;
+}
+/* === 사진 와이드(16:9) + 중앙 정렬 === */
+:root{
+  --monitor-img-w: 640px;    /* 가로 크기 (원하는 값: 640, 720, 800px 등) */
+  --monitor-img-h: 360px;    /* 세로 크기 (가로 × 9 ÷ 16) */
+}
+
+/* 이미지 카드 박스 */
+#imageResultImg .image-card {
+  max-width: var(--monitor-img-w) !important;
+  margin: 0 auto;   /* 카드 전체 중앙 */
+}
+
+/* 이미지 박스 */
+.image-box {
+  width: var(--monitor-img-w) !important;
+  height: var(--monitor-img-h) !important;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f8f8f8;
+  margin: 0 auto;   /* 박스 중앙 */
+}
+
+/* 이미지 꽉 채우기 */
+.image-box img,
+.image-card img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;  /* 비율 유지하면서 꽉 채우기 */
+  display: block;
+}
+
+/* 텍스트 박스도 동일 폭 + 중앙 */
+#imageResultTxt .ai-result {
+  max-width: var(--monitor-img-w) !important;
+  margin: 12px auto 0 auto; /* 가운데 정렬 */
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* === 결과 영역: 1칸 + 중앙 배치로 강제 === */
+#imageResult.monitor-grid{
+  display: grid !important;
+  grid-template-columns: 1fr !important;   /* 3칸 → 1칸 */
+  justify-items: center;                    /* 자식들을 가로 중앙 */
+  row-gap: 16px;                            /* 위아래 간격 */
+}
+
+/* 내부 두 블록(이미지/텍스트)도 중앙 정렬 유지 */
+#imageResultImg, #imageResultTxt{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* 각 블록의 내용도 중앙 */
+}
+
