@@ -10,8 +10,7 @@
     SELECT COUNT(*) FROM inquiry
     	WHERE member_id = #{member_id}
     </select>
-    <select id="getTotalCount2"
-    >
+    <select id="getTotalCount2">
 	SELECT COUNT(inq.inquiry_id) AS inquiry_count
 		FROM inquiry inq
 		LEFT JOIN product pro
@@ -19,12 +18,9 @@
 			WHERE pro.member_id = #{member_id}
     </select>
     
-   
    <select id="selectInq1"
    parameterType="com.farm.dto.PageDTO"
-   resultType="com.farm.dto.InquiryDTO"
-   >
-   
+   resultType="com.farm.dto.InquiryDTO">
    SELECT 
 	    inq.inquiry_id,
 	    inq.prod_id,
@@ -53,9 +49,8 @@
    
    <select id="selectInq2"
    parameterType="Long"
-   resultType="com.farm.dto.InquiryDTO"
-   >
-   SELECT inq.inquiry_id, inq.prod_id, inq.content, inq.member_id, title, postdate AS postdate, pro.prod_name, COUNT(com.inquiry_id) AS com_count
+   resultType="com.farm.dto.InquiryDTO">
+   SELECT inq.inquiry_id, inq.prod_id, inq.content, inq.member_id, inq.title, inq.postdate AS postdate, pro.prod_name, COUNT(com.inquiry_id) AS com_count
          FROM inquiry inq
          INNER JOIN product pro ON inq.prod_id = pro.prod_id
          LEFT JOIN comments com ON inq.inquiry_id = com.inquiry_id
@@ -75,9 +70,9 @@
    <insert id="insertInq"
       parameterType="com.farm.dto.InquiryDTO">
       INSERT INTO inquiry
-         (inquiry_id, prod_id, content, title, member_id)   
+         (prod_id, content, title, member_id)   
       VALUES
-         (seq_inquiry_id.nextval, #{prod_id}, #{content} ,#{title}, #{member_id})
+         (#{prod_id}, #{content} ,#{title}, #{member_id})
    </insert>
    
    <!-- 문의 수정 -->

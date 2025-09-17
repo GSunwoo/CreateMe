@@ -10,12 +10,12 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
-import jakarta.persistence.SequenceGenerator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,19 +29,13 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Inquiry {
 	@Id
-	@SequenceGenerator(
-			name = "inquirySequence",
-			sequenceName = "seq_inquiry_id",
-			initialValue = 1,
-			allocationSize = 1
-		)
-	@GeneratedValue(generator = "inquirySequence")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long inquiry_id;
 	@Column(nullable = false)
 	private String title;
 	@Column(nullable = false)
 	private String content;
-	@Column(nullable = false, columnDefinition = "DATE DEFAULT SYSDATE")
+	@Column(nullable = false, columnDefinition = "DATE DEFAULT NOW()")
 	private LocalDate postdate;
 	@Column(nullable = false, columnDefinition = "NUMBER DEFAULT 0")
 	private int visitcount;

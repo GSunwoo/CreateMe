@@ -9,10 +9,10 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
-import jakarta.persistence.SequenceGenerator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,13 +26,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Member {
 	@Id
-	@SequenceGenerator(
-			name = "memberSequence",
-			sequenceName = "seq_member_id",
-			initialValue = 1,
-			allocationSize = 1
-		)
-	@GeneratedValue(generator = "memberSequence")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long member_id;
 	@Column(nullable = false)
 	private String user_type;
@@ -50,7 +44,7 @@ public class Member {
 	private String emaildomain;
 	@Column(nullable = false, columnDefinition = "NUMBER DEFAULT 50")
 	private int trust_score;
-	@Column(nullable = false, columnDefinition = "DATE DEFAULT SYSDATE")
+	@Column(nullable = false, columnDefinition = "DATE DEFAULT NOW()")
 	private Date regidate;
 	@Column(nullable = false, columnDefinition = "NUMBER DEFAULT 1")
 	private int enable;

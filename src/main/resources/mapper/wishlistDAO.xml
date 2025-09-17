@@ -7,27 +7,27 @@
 	<insert id="addWishlist"
 		parameterType="com.farm.dto.WishlistDTO">
 		INSERT INTO wishlist
-			(prod_qty, member_id, prod_id, wish_id)
+			(prod_qty, member_id, prod_id)
 		VALUES
-			(#{prod_qty}, #{member_id}, #{prod_id}, seq_wishlist_id.nextval)
+			(#{prod_qty}, #{member_id}, #{prod_id})
 	</insert>
 	
 	<select id="selectWishlist"
 		parameterType="Long"
 		resultType="com.farm.dto.WishlistDTO">
-		SELECT prod_qty, wish.prod_id, prod_name, prod_price, wish_id
+		SELECT wish.prod_qty, wish.prod_id, prod.prod_name, prod.prod_price, wish.wish_id
 			FROM wishlist wish
 			LEFT JOIN product prod
 				ON wish.prod_id = prod.prod_id
-				WHERE wish.member_id = #{member_id}
-					ORDER BY wish_id DESC
+			WHERE wish.member_id = #{member_id}
+			ORDER BY wish.wish_id DESC
 	</select>
 	
 	<update id="updateWishlist"
-		parameterType="Long">
+		parameterType="com.farm.dto.WishlistDTO">
 		UPDATE wishlist 
-			SET	prod_qty = #{prod_qty}
-				WHERE wish_id = #{wish_id}
+			SET prod_qty = #{prod_qty}
+			WHERE wish_id = #{wish_id}
 	</update>
 	
 	<delete id="deleteWishlist"

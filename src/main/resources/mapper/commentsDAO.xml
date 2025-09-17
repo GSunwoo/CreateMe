@@ -6,14 +6,14 @@
    
 <mapper namespace="com.farm.service.ICommentsService">
 	<insert id="insertComments" parameterType="com.farm.dto.CommentsDTO">
-		INSERT INTO comments (com_id, com_content, member_id, inquiry_id)
-			VALUES (seq_comment_id.nextval, #{com_content}, #{member_id}, #{inquiry_id})
+		INSERT INTO comments (com_content, member_id, inquiry_id)
+			VALUES (#{com_content}, #{member_id}, #{inquiry_id})
 	</insert>
 	
 	<select id="getComments" parameterType="Long"
 		resultType="com.farm.dto.CommentsDTO">
 		SELECT * FROM comments
-		WHERE com_id = #{com_id}	
+		WHERE com_id = #{com_id}
 	</select>
 	
 	<select id="selectComments" parameterType="Long"

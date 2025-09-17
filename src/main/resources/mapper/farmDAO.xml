@@ -6,14 +6,14 @@
 
 <mapper namespace="com.farm.service.IFarmService">
 	
-	<select id="selectFarmInfo" parameterType="Long" 
+	<select id="selectFarmInfo" parameterType="long" 
 		resultType="com.farm.dto.FarmDTO">
 		SELECT *
-			FROM farm
-				WHERE member_id = #{member_id}
+		FROM farm
+		WHERE member_id = #{member_id}
 	</select>
 	
-	<delete id="deleteFarm" parameterType="Long">
+	<delete id="deleteFarm" parameterType="long">
 		DELETE FROM farm WHERE member_id = #{member_id}
 	</delete>
 	

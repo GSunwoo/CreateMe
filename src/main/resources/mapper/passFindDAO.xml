@@ -9,23 +9,21 @@
 		resultType="long"
 		parameterType="com.farm.dto.PassFindDTO">
 		SELECT member_id FROM member
-			WHERE user_id=#{user_id} AND
-				  name=#{name} AND
-				  emailid=#{emailid} AND
-				  emaildomain=#{emaildomain}
+		WHERE user_id = #{user_id}
+		  AND name = #{name}
+		  AND emailid = #{emailid}
+		  AND emaildomain = #{emaildomain}
 	</select>
 
-	<!-- 새 패스워드 저장 -->
 	<update id="sendNewPw">
-		UPDATE member 
-			SET user_pw=#{passwd} 
-			WHERE member_id=#{member_id}
+		UPDATE member
+		SET user_pw = #{passwd}
+		WHERE member_id = #{member_id}
 	</update>
 	
 	<select id="selectEmail" parameterType="Long"
 		resultType="com.farm.dto.PassFindDTO">
 		SELECT emailid, emaildomain, name FROM member
 		WHERE member_id = #{member_id}
-			 
 	</select>
 </mapper>

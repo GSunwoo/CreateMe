@@ -7,11 +7,11 @@ import java.time.LocalDateTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
-import jakarta.persistence.SequenceGenerator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,18 +26,12 @@ import lombok.NoArgsConstructor;
 public class Comments {
 
 	@Id
-	@SequenceGenerator(
-			name = "commentSequence",
-			sequenceName = "seq_comment_id",
-			initialValue = 1,
-			allocationSize = 1
-			)
-	@GeneratedValue(generator = "commentSequence")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable = false)
 	private Long com_id;
 	@Column(nullable = false)
 	private String com_content;
-	@Column(nullable = false, columnDefinition = "DATE DEFAULT SYSDATE")
+	@Column(nullable = false, columnDefinition = "DATE DEFAULT NOW()")
 	private LocalDate com_date;
 	
 	@ManyToOne

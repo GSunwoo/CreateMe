@@ -7,30 +7,34 @@
 	<select id="selectBuyerOrdersAll"
 		resultType="com.farm.dto.OrderDTO">
 	SELECT order_num, purc_date, purc_state, qty, ord.prod_id, prod_name, prod_price, filename, purc_id
-	FROM (SELECT Tb.*, rownum rNum FROM (
-				SELECT pu.*, prod_name, prod_price
-				FROM purchase pu
-				INNER JOIN product pr
-				ON pu.prod_id=pr.prod_id 
-				WHERE pu.member_id=#{member_id}
-			) Tb
-		) ord
-		INNER JOIN product_img img
-		ON ord.prod_id = img.prod_id and img.main_idx = 1
-		WHERE rNum BETWEEN #{param.start} AND #{param.end}
-		ORDER BY purc_date DESC
+	FROM (
+		SELECT 
+			pu.*, 
+			pr.prod_name, 
+			pr.prod_price, 
+			img.filename,
+			ROW_NUMBER() OVER (ORDER BY pu.purc_date DESC) AS rNum
+		FROM purchase pu
+		INNER JOIN product pr ON pu.prod_id = pr.prod_id
+		INNER JOIN product_img img ON pu.prod_id = img.prod_id AND img.main_idx = 1
+		WHERE pu.member_id = #{member_id}
+	) ord
+	WHERE ord.rNum BETWEEN #{param.start} AND #{param.end}
+	ORDER BY purc_date DESC
 	</select>
 	<select id="selectSellerOrdersAll"
 		resultType="com.farm.dto.OrderDTO">
 	SELECT order_num, purc_date, purc_state, qty, ord.prod_id, prod_name, prod_price, purc_id, ord.member_id
-	FROM (SELECT Tb.*, rownum rNum FROM (
-				SELECT pu.*, prod_name, prod_price
-				FROM purchase pu
-				INNER JOIN product pr
-				ON pu.prod_id=pr.prod_id 
-				WHERE pr.member_id=#{member_id}
-				ORDER BY purc_id DESC
-			) Tb
-		) ord
+	FROM (
+		SELECT 
+			pu.*, 
+			pr.prod_name, 
+			pr.prod_price, 
+			ROW_NUMBER() OVER (ORDER BY pu.purc_id DESC) AS rNum
+		FROM purchase pu
+		INNER JOIN product pr ON pu.prod_id = pr.prod_id
+		WHERE pr.member_id = #{member_id}
+	) ord
+	ORDER BY purc_id DESC
 	</select>
 </mapper>

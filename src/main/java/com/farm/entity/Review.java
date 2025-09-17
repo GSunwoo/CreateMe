@@ -8,13 +8,13 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
-import jakarta.persistence.SequenceGenerator;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,15 +28,9 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Review {
 	@Id
-	@SequenceGenerator(
-			name = "reviewSequence",
-			sequenceName = "seq_review_id",
-			initialValue = 1,
-			allocationSize = 1
-		)
-	@GeneratedValue(generator = "reviewSequence")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long review_id;
-	@Column(nullable = false, columnDefinition = "DATE DEFAULT SYSDATE")
+	@Column(nullable = false, columnDefinition = "DATE DEFAULT NOW()")
 	private Date postdate;
 	@Column(nullable = false)
 	private String title;

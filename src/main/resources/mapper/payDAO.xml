@@ -8,12 +8,12 @@
 		resultType="com.farm.dto.PayDTO">
 		SELECT member_id, name, phone_num, emailid, emaildomain
 		FROM member
-		WHERE member_id=#{member_id}
+		WHERE member_id = #{member_id}
 	</select>
 	<select id="getOrderInfoProduct"
 		resultType="com.farm.dto.PayDTO">
 		SELECT prod_id, prod_name, prod_price
 		FROM product
-		WHERE prod_id=#{prod_id}
+		WHERE prod_id = #{prod_id}
 	</select>
 </mapper>

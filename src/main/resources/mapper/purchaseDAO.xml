@@ -8,7 +8,7 @@
 		resultType="com.farm.dto.WishlistDTO">
 		SELECT prod_name, prod_id, prod_price 
 		FROM product
-		WHERE prod_id=#{prod_id}
+		WHERE prod_id = #{prod_id}
 	</select>
 	
 	<select id="selectProducts"
@@ -25,17 +25,14 @@
 	
 	<insert id="insertPurchase"
 		parameterType="com.farm.dto.PurchaseDTO">
-	INSERT INTO purchase (purc_id, order_num, prod_id, member_id, qty, purc_request)
-		VALUES (seq_purchase_id.nextval, #{order_num}, #{prod_id}, #{member_id}, #{qty}, #{purc_request})
+	INSERT INTO purchase (order_num, prod_id, member_id, qty, purc_request)
+		VALUES (#{order_num}, #{prod_id}, #{member_id}, #{qty}, #{purc_request})
 	</insert>
-	
-	
 	
 	<insert id="insertPurchaseDummy" parameterType="com.farm.dto.PurchaseDTO">
 	    INSERT INTO purchase (
-	        purc_id, order_num, prod_id, member_id, qty, purc_request, purc_date
+	        order_num, prod_id, member_id, qty, purc_request, purc_date
 	    ) VALUES (
-	        seq_purchase_id.nextval,
 	        #{order_num},
 	        #{prod_id},
 	        #{member_id},
@@ -47,7 +44,7 @@
 	
 	<update id="updateQty">
 	UPDATE product 
-	SET prod_stock=prod_stock-#{qty} 
-	WHERE prod_id=#{prod_id}
+	SET prod_stock = prod_stock - #{qty} 
+	WHERE prod_id = #{prod_id}
 	</update>
 </mapper>

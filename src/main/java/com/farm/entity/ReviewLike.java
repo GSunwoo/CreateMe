@@ -40,7 +40,7 @@ public class ReviewLike {
     @JoinColumn(name = "member_id")
     private Member member;
     
-    @Column(nullable = false, columnDefinition = "DATE DEFAULT SYSDATE")
+    @Column(nullable = false, columnDefinition = "DATE DEFAULT NOW()")
     private Date createdAt;
     
     //좋아요가 언제 눌렸는지를 기록하기 위해 
