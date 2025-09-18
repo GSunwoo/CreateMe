@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.junit.runners.Parameterized.Parameters;
 
-import com.farm.dto.PageDTO;
+import com.farm.common.dto.PageDTO;
 import com.farm.dto.ReviewBoardDTO;
 
 import lombok.experimental.PackagePrivate;

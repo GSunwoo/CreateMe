@@ -1,9 +1,9 @@
-package com.farm.service;
+package com.farm.purchase.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.farm.dto.PayDTO;
+import com.farm.purchase.dto.PayDTO;
 
 @Mapper
 public interface IPayService {

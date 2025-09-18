@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.farm.dto.PageDTO;
+import com.farm.common.dto.PageDTO;
 import com.farm.inquiry.dto.CommentsDTO;
 import com.farm.inquiry.dto.InquiryDTO;
 import com.farm.inquiry.mapper.IInquiryMapper;

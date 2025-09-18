@@ -1,4 +1,4 @@
-package com.farm.service;
+package com.farm.purchase.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.farm.dto.PurchaseDTO;
-import com.farm.dto.WishlistDTO;
+import com.farm.purchase.dto.PurchaseDTO;
+import com.farm.wishlist.dto.WishlistDTO;
 
 @Mapper
 public interface IPurchaseService {

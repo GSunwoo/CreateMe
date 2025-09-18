@@ -1,4 +1,4 @@
-package com.farm.controller;
+package com.farm.purchase.controller;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -15,14 +15,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.farm.dto.OrderCacheDTO;
-import com.farm.dto.PayDTO;
-import com.farm.dto.PurchaseDTO;
 import com.farm.login.config.CustomUserDetails;
-import com.farm.service.IOrderCacheService;
-import com.farm.service.IPayService;
-import com.farm.service.IPurchaseService;
-import com.farm.service.IWishlistService;
+import com.farm.purchase.dto.OrderCacheDTO;
+import com.farm.purchase.dto.PayDTO;
+import com.farm.purchase.dto.PurchaseDTO;
+import com.farm.purchase.mapper.IOrderCacheService;
+import com.farm.purchase.mapper.IPayService;
+import com.farm.purchase.mapper.IPurchaseService;
+import com.farm.wishlist.mapper.IWishlistMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -36,7 +36,7 @@ public class PaymentController {
 	@Autowired
 	IPurchaseService purDAO;
 	@Autowired
-	IWishlistService wishDAO;
+	IWishlistMapper wishDAO;
 	
 	@Value("${toss.clientKey}")
 	private String WIDGET_CLIENT_KEY; // toss 클라이언트 키

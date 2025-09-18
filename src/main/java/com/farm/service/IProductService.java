@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.farm.dto.ParameterDTO;
+import com.farm.common.dto.ParameterDTO;
 import com.farm.dto.ProductDTO;
 
 @Mapper

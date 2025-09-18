@@ -1,4 +1,4 @@
-package com.farm.controller;
+package com.farm.wishlist.controller;
 
 import java.util.ArrayList;
 
@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.farm.dto.WishlistDTO;
 import com.farm.login.config.CustomUserDetails;
-import com.farm.service.IWishlistService;
+import com.farm.wishlist.mapper.IWishlistMapper;
+import com.farm.wishlist.dto.WishlistDTO;
 
 @Controller
 public class WishlistController {
 
 	@Autowired
-	IWishlistService wishDao;
+	IWishlistMapper wishDao;
 	
 	@PostMapping("/wishlist/add.do")
 	@ResponseBody

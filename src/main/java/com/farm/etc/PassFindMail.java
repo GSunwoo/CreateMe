@@ -9,7 +9,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 
-import com.farm.dto.MailInfoDTO;
+import com.farm.common.dto.MailInfoDTO;
 
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;

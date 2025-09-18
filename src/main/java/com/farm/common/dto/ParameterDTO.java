@@ -1,4 +1,4 @@
-package com.farm.dto;
+package com.farm.common.dto;
 
 import java.util.Date;
 import java.util.List;

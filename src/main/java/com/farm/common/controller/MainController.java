@@ -1,4 +1,4 @@
-package com.farm.controller;
+package com.farm.common.controller;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -18,14 +18,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.farm.dto.ParameterDTO;
+import com.farm.common.dto.ParameterDTO;
 import com.farm.dto.ProductDTO;
-import com.farm.dto.PurchaseDTO;
 import com.farm.dto.ReviewBoardDTO;
 import com.farm.login.config.CustomUserDetails;
 import com.farm.member.dto.MemberDTO;
+import com.farm.purchase.controller.PaymentController;
+import com.farm.purchase.dto.PurchaseDTO;
+import com.farm.purchase.mapper.IPurchaseService;
 import com.farm.service.IProductService;
-import com.farm.service.IPurchaseService;
 import com.farm.service.ReviewCarouselService;
 
 

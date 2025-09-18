@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.farm.dto.MailInfoDTO;
-import com.farm.dto.PassFindDTO;
+import com.farm.common.dto.MailInfoDTO;
+import com.farm.common.dto.PassFindDTO;
+import com.farm.common.mapper.IPassFinderMapper;
 import com.farm.etc.PassFindMail;
 import com.farm.etc.RandomPasswordGenerator;
-import com.farm.service.IPassFinderService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class LoginController {
 	
 	@Autowired
-	IPassFinderService passDAO;
+	IPassFinderMapper passDAO;
 	
 	@RequestMapping("/myLogin.do")
 	public String login0() {

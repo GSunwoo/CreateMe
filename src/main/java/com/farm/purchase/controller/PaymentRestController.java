@@ -1,4 +1,4 @@
-package com.farm.controller;
+package com.farm.purchase.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;

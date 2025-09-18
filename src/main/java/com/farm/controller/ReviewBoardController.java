@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.farm.dto.PageDTO;
+import com.farm.common.dto.PageDTO;
 import com.farm.dto.ReviewBoardDTO;
 import com.farm.dto.ReviewImgDTO;
 import com.farm.login.config.CustomUserDetails;

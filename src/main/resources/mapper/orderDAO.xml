@@ -3,9 +3,9 @@
    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.farm.service.IOrderService">
+<mapper namespace="com.farm.purchase.mapper.IOrderService">
 	<select id="selectBuyerOrdersAll"
-		resultType="com.farm.dto.OrderDTO">
+		resultType="com.farm.purchase.dto.OrderDTO">
 	SELECT order_num, purc_date, purc_state, qty, ord.prod_id, prod_name, prod_price, filename, purc_id
 	FROM (
 		SELECT 
@@ -23,7 +23,7 @@
 	ORDER BY purc_date DESC
 	</select>
 	<select id="selectSellerOrdersAll"
-		resultType="com.farm.dto.OrderDTO">
+		resultType="com.farm.purchase.dto.OrderDTO">
 	SELECT order_num, purc_date, purc_state, qty, ord.prod_id, prod_name, prod_price, purc_id, ord.member_id
 	FROM (
 		SELECT 
