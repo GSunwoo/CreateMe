@@ -1,4 +1,4 @@
-package com.farm.controller;
+package com.farm.login.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;

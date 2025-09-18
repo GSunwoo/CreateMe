@@ -1,4 +1,4 @@
-package com.farm.dto;
+package com.farm.inquiry.dto;
 
 import lombok.Data;
 

@@ -1,16 +1,16 @@
-package com.farm.service;
+package com.farm.inquiry.mapper;
 
 import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.farm.dto.CommentsDTO;
-import com.farm.dto.InquiryDTO;
 import com.farm.dto.PageDTO;
+import com.farm.inquiry.dto.CommentsDTO;
+import com.farm.inquiry.dto.InquiryDTO;
 
 @Mapper
-public interface IInquiryService {
+public interface IInquiryMapper {
    
    //Paging 처리를 위한 게시물 카운트
    public int getTotalCount1(PageDTO pageDTO);

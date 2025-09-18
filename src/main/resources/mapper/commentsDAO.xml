@@ -4,25 +4,25 @@
    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
-<mapper namespace="com.farm.service.ICommentsService">
+<mapper namespace="com.farm.inquiry.mapper.ICommentsMapper">
 	<insert id="insertComments" parameterType="com.farm.dto.CommentsDTO">
 		INSERT INTO comments (com_content, member_id, inquiry_id)
 			VALUES (#{com_content}, #{member_id}, #{inquiry_id})
 	</insert>
 	
 	<select id="getComments" parameterType="Long"
-		resultType="com.farm.dto.CommentsDTO">
+		resultType="com.farm.inquiry.dto.CommentsDTO">
 		SELECT * FROM comments
 		WHERE com_id = #{com_id}
 	</select>
 	
 	<select id="selectComments" parameterType="Long"
-		resultType="com.farm.dto.CommentsDTO">
+		resultType="com.farm.inquiry.dto.CommentsDTO">
 		SELECT * FROM comments
 		WHERE inquiry_id = #{inquiry_id}
 	</select>
 	
-	<update id="updateComments" parameterType="com.farm.dto.CommentsDTO">
+	<update id="updateComments" parameterType="com.farm.inquiry.dto.CommentsDTO">
 		UPDATE comments SET
 			com_content = #{com_content}
 		WHERE com_id = #{com_id}

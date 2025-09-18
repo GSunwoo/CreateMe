@@ -1,4 +1,4 @@
-package com.farm.controller;
+package com.farm.member.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -7,8 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.farm.config.CustomUserDetails;
-import com.farm.dto.FarmDTO;
+import com.farm.login.config.CustomUserDetails;
+import com.farm.member.dto.FarmDTO;
 import com.farm.service.IFarmService;
 
 @Controller

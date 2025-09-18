@@ -3,7 +3,7 @@ package com.farm.service;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.farm.dto.FarmDTO;
+import com.farm.member.dto.FarmDTO;
 
 @Mapper
 public interface IFarmService {

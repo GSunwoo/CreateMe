@@ -15,10 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.farm.config.CustomUserDetails;
 import com.farm.dto.OrderCacheDTO;
 import com.farm.dto.PayDTO;
 import com.farm.dto.PurchaseDTO;
+import com.farm.login.config.CustomUserDetails;
 import com.farm.service.IOrderCacheService;
 import com.farm.service.IPayService;
 import com.farm.service.IPurchaseService;

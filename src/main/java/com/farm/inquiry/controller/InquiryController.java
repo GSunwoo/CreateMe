@@ -1,4 +1,4 @@
-package com.farm.controller;
+package com.farm.inquiry.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.farm.config.CustomUserDetails;
-import com.farm.dto.CommentsDTO;
-import com.farm.dto.InquiryDTO;
 import com.farm.dto.PageDTO;
-import com.farm.service.ICommentsService;
-import com.farm.service.IInquiryService;
+import com.farm.inquiry.dto.CommentsDTO;
+import com.farm.inquiry.dto.InquiryDTO;
+import com.farm.inquiry.mapper.IInquiryMapper;
+import com.farm.login.config.CustomUserDetails;
+import com.farm.inquiry.mapper.ICommentsMapper;
 import com.farm.service.IProductService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,10 +28,10 @@ import utils.PagingUtil;
 public class InquiryController {
 
 	@Autowired
-	IInquiryService inqDao;
+	IInquiryMapper inqDao;
 
 	@Autowired
-	ICommentsService comDao;
+	ICommentsMapper comDao;
 	
 	// 문의 생성
 	@GetMapping("/buyer/inquiryForm.do")

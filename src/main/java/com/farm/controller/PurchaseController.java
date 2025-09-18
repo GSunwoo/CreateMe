@@ -10,11 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.farm.config.CustomUserDetails;
-import com.farm.dto.AddressDTO;
-import com.farm.dto.MemberDTO;
 import com.farm.dto.WishlistDTO;
-import com.farm.service.IMemberService;
+import com.farm.login.config.CustomUserDetails;
+import com.farm.member.dto.AddressDTO;
+import com.farm.member.dto.MemberDTO;
+import com.farm.member.mapper.IMemberMapper;
 import com.farm.service.IPurchaseService;
 
 @Controller
@@ -29,7 +29,7 @@ public class PurchaseController {
 	@Autowired
 	IPurchaseService purDAO;
 	@Autowired
-	IMemberService memDAO;
+	IMemberMapper memDAO;
 	
 	@GetMapping("/buyer/purchase/direct.do")
 	// 파라미터로 prod_id 현재상품 qty 몇개사는지

@@ -1,4 +1,4 @@
-package com.farm.controller;
+package com.mypage.controller;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -22,15 +22,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.farm.config.CustomUserDetails;
-import com.farm.dto.AddressDTO;
-import com.farm.dto.MemberDTO;
 import com.farm.dto.OrderDTO;
 import com.farm.dto.ParameterDTO;
 import com.farm.dto.ProductDTO;
 import com.farm.dto.ReviewBoardDTO;
-import com.farm.service.IMemberFormService;
-import com.farm.service.IMemberService;
+import com.farm.login.config.CustomUserDetails;
+import com.farm.member.dto.AddressDTO;
+import com.farm.member.dto.MemberDTO;
+import com.farm.member.mapper.IMemberFormMapper;
+import com.farm.member.mapper.IMemberMapper;
 import com.farm.service.IOrderService;
 import com.farm.service.ReviewBoardService;
 import com.mypage.mapper.IMypageMapper;
@@ -52,14 +52,14 @@ public class MypageBuyerController {
 	@Autowired
 	IMypageMapper mypageDAO;
 	@Autowired
-	IMemberService memDAO;
+	IMemberMapper memDAO;
 	@Autowired
 	IOrderService orderDAO;
 	@Autowired
 	ReviewBoardService reviewDAO;
 	
 	@Autowired
-	IMemberFormService mFDao;
+	IMemberFormMapper mFDao;
 	
 	@GetMapping("/mypage.do")
 	public String mypageMapper(@AuthenticationPrincipal CustomUserDetails userDetails) {

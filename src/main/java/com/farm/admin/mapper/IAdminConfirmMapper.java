@@ -1,15 +1,15 @@
-package com.farm.service;
+package com.farm.admin.mapper;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.farm.dto.FarmDTO;
 import com.farm.dto.ProductDTO;
+import com.farm.member.dto.FarmDTO;
 
 @Mapper
-public interface IAdminConfirmService {
+public interface IAdminConfirmMapper {
 	// 요청중인 상품 불러오기 및 승인/반려
 	public List<ProductDTO> selectRequestProducts();
 	public int confirmProduct(@Param("prod_id") Long prod_id);

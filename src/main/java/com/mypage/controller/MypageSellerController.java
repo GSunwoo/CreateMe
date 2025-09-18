@@ -1,4 +1,4 @@
-package com.farm.controller;
+package com.mypage.controller;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -20,9 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.farm.config.CustomUserDetails;
+import com.farm.controller.PriceController;
 import com.farm.dto.MailInfoDTO;
-import com.farm.dto.MemberDTO;
 import com.farm.dto.OrderDTO;
 import com.farm.dto.ParameterDTO;
 import com.farm.dto.PassFindDTO;
@@ -30,8 +29,10 @@ import com.farm.dto.ProductDTO;
 import com.farm.dto.ReviewBoardDTO;
 import com.farm.etc.PassFindMail;
 import com.farm.etc.RandomPasswordGenerator;
-import com.farm.service.IMemberFormService;
-import com.farm.service.IMemberService;
+import com.farm.login.config.CustomUserDetails;
+import com.farm.member.dto.MemberDTO;
+import com.farm.member.mapper.IMemberFormMapper;
+import com.farm.member.mapper.IMemberMapper;
 import com.farm.service.IOrderService;
 import com.farm.service.IPassFinderService;
 import com.farm.service.ReviewBoardService;
@@ -58,13 +59,13 @@ public class MypageSellerController {
    @Autowired
    IMypageMapper mypageDAO;
    @Autowired
-   IMemberService memDAO;
+   IMemberMapper memDAO;
    @Autowired
    IOrderService orderDAO;
    @Autowired
    ReviewBoardService reviewDAO;
    @Autowired
-   IMemberFormService memfDao;
+   IMemberFormMapper memfDao;
    
    @Autowired
    IPassFinderService mailDao;

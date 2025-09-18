@@ -1,4 +1,4 @@
-package com.farm.config;
+package com.farm.login.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -6,14 +6,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.farm.dto.MemberDTO;
-import com.farm.service.IMemberService;
+import com.farm.member.dto.MemberDTO;
+import com.farm.member.mapper.IMemberMapper;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService{
 	
 	@Autowired
-	private IMemberService dao; // Mybatis 매퍼 인터페이스
+	private IMemberMapper dao; // Mybatis 매퍼 인터페이스
 	
 	/*
 	username : 로그인 시 입력받은 user_id

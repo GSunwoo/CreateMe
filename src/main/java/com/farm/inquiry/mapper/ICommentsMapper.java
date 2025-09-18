@@ -1,14 +1,14 @@
-package com.farm.service;
+package com.farm.inquiry.mapper;
 
 import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.farm.dto.CommentsDTO;
+import com.farm.inquiry.dto.CommentsDTO;
 
 @Mapper
-public interface ICommentsService {
+public interface ICommentsMapper {
 
 	public int insertComments(CommentsDTO commentsDTO);
 	public ArrayList<CommentsDTO> selectComments(@Param("inquiry_id") Long inquiry_id);

@@ -1,4 +1,4 @@
-package com.farm.controller;
+package com.farm.member.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -6,14 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.farm.dto.MemberDTO;
-import com.farm.service.IMemberFormService;
+import com.farm.member.dto.MemberDTO;
+import com.farm.member.mapper.IMemberFormMapper;
 
 @Controller
 public class MemberController {
 
 	@Autowired
-    private IMemberFormService formDao;
+    private IMemberFormMapper formDao;
 	
 	@GetMapping("/memberForm/seller.do") //회원가입 페이지
 	public String memberFormSeller() {

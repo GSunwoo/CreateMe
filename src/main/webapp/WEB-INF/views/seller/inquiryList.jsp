@@ -7,7 +7,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Collections" %>
 <%@ page import="java.util.Comparator" %>
-<%@ page import="com.farm.dto.InquiryDTO" %>
+<%@ page import="com.farm.inquiry.dto.InquiryDTO" %>
 
 <!DOCTYPE html>
 <html>
@@ -176,14 +176,14 @@
     int pageSize = 10;
 
     // 문의 리스트 받아오기
-    List<com.farm.dto.InquiryDTO> inquiryList =
-        (List<com.farm.dto.InquiryDTO>) request.getAttribute("inquiries");
+    List<com.farm.inquiry.dto.InquiryDTO> inquiryList =
+        (List<com.farm.inquiry.dto.InquiryDTO>) request.getAttribute("inquiries");
 
     // 최신순 정렬 (postdate 기준 내림차순)
     if (inquiryList != null) {
-        java.util.Collections.sort(inquiryList, new java.util.Comparator<com.farm.dto.InquiryDTO>() {
+        java.util.Collections.sort(inquiryList, new java.util.Comparator<com.farm.inquiry.dto.InquiryDTO>() {
             @Override
-            public int compare(com.farm.dto.InquiryDTO a, com.farm.dto.InquiryDTO b) {
+            public int compare(com.farm.inquiry.dto.InquiryDTO a, com.farm.inquiry.dto.InquiryDTO b) {
                 return b.getPostdate().compareTo(a.getPostdate());
             }
         });

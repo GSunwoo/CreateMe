@@ -1,4 +1,4 @@
-package com.farm.controller;
+package com.farm.inquiry.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.farm.config.CustomUserDetails;
-import com.farm.dto.CommentsDTO;
-import com.farm.dto.InquiryDTO;
-import com.farm.service.ICommentsService;
-import com.farm.service.IInquiryService;
+import com.farm.inquiry.dto.CommentsDTO;
+import com.farm.inquiry.dto.InquiryDTO;
+import com.farm.inquiry.mapper.IInquiryMapper;
+import com.farm.login.config.CustomUserDetails;
+import com.farm.inquiry.mapper.ICommentsMapper;
 import com.farm.service.IProductService;
 
 
@@ -24,11 +24,11 @@ import com.farm.service.IProductService;
 public class CommentController {
 	
 	@Autowired
-	ICommentsService comDao;
+	ICommentsMapper comDao;
 	@Autowired
 	IProductService proDao;
 	@Autowired
-	IInquiryService inqDao;
+	IInquiryMapper inqDao;
 	
 	@PostMapping("seller/insertComment")
 	@ResponseBody

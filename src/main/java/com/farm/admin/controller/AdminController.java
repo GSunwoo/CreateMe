@@ -1,4 +1,4 @@
-package com.farm.controller;
+package com.farm.admin.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.farm.dto.FarmDTO;
-import com.farm.dto.MemberDTO;
+import com.farm.admin.mapper.IAdminConfirmMapper;
 import com.farm.dto.PageDTO;
 import com.farm.dto.ParameterDTO;
 import com.farm.dto.ProductDTO;
 import com.farm.dto.ReviewBoardDTO;
-import com.farm.service.IAdminConfirmService;
-import com.farm.service.IMemberService;
+import com.farm.member.dto.FarmDTO;
+import com.farm.member.dto.MemberDTO;
+import com.farm.member.mapper.IMemberMapper;
 import com.farm.service.IProductService;
 import com.farm.service.ReviewBoardService;
 
@@ -39,7 +39,7 @@ public class AdminController {
 
 	// 승인 DAO
 	@Autowired
-	IAdminConfirmService confirmDAO;
+	IAdminConfirmMapper confirmDAO;
 
 	// 리뷰 DAO
 	@Autowired
@@ -47,7 +47,7 @@ public class AdminController {
 
 	// 멤버 DAO
 	@Autowired
-	IMemberService memDAO;
+	IMemberMapper memDAO;
 	
 	// 페이지 설정
 	@Value("${board.pageSize}")

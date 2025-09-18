@@ -22,11 +22,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.farm.config.CustomUserDetails;
-import com.farm.dto.MemberDTO;
 import com.farm.dto.PageDTO;
 import com.farm.dto.ReviewBoardDTO;
 import com.farm.dto.ReviewImgDTO;
+import com.farm.login.config.CustomUserDetails;
+import com.farm.member.dto.MemberDTO;
 import com.farm.service.ReviewBoardService;
 import com.farm.service.ReviewCarouselService;
 import com.farm.service.ReviewImgService;

@@ -1,16 +1,16 @@
-package com.farm.service;
+package com.farm.member.mapper;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.farm.dto.AddressDTO;
-import com.farm.dto.MemberDTO;
 import com.farm.dto.PageDTO;
+import com.farm.member.dto.AddressDTO;
+import com.farm.member.dto.MemberDTO;
 
 @Mapper
-public interface IMemberService {
+public interface IMemberMapper {
 
 	public MemberDTO loginCheck(String userId);
 	// user_id로 회원 정보를 조회하는 쿼리
