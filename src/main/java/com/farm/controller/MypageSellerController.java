@@ -32,10 +32,10 @@ import com.farm.etc.PassFindMail;
 import com.farm.etc.RandomPasswordGenerator;
 import com.farm.service.IMemberFormService;
 import com.farm.service.IMemberService;
-import com.farm.service.IMypageService;
 import com.farm.service.IOrderService;
 import com.farm.service.IPassFinderService;
 import com.farm.service.ReviewBoardService;
+import com.mypage.mapper.IMypageMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -56,7 +56,7 @@ public class MypageSellerController {
    private int bestSize;
    
    @Autowired
-   IMypageService mypageDAO;
+   IMypageMapper mypageDAO;
    @Autowired
    IMemberService memDAO;
    @Autowired

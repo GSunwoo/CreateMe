@@ -31,9 +31,9 @@ import com.farm.dto.ProductDTO;
 import com.farm.dto.ReviewBoardDTO;
 import com.farm.service.IMemberFormService;
 import com.farm.service.IMemberService;
-import com.farm.service.IMypageService;
 import com.farm.service.IOrderService;
 import com.farm.service.ReviewBoardService;
+import com.mypage.mapper.IMypageMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -50,7 +50,7 @@ public class MypageBuyerController {
 	private int bestSize;
 	
 	@Autowired
-	IMypageService mypageDAO;
+	IMypageMapper mypageDAO;
 	@Autowired
 	IMemberService memDAO;
 	@Autowired

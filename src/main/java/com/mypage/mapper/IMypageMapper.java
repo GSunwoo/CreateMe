@@ -1,4 +1,4 @@
-package com.farm.service;
+package com.mypage.mapper;
 
 import java.sql.Date;
 import java.util.List;
@@ -11,7 +11,7 @@ import com.farm.dto.ProductDTO;
 import com.farm.dto.ReviewBoardDTO;
 
 @Mapper
-public interface IMypageService {
+public interface IMypageMapper {
 	// 구매자용
 	public int getOrderCnt(@Param("member_id") Long member_id); // 주문수
 	public int getReviewCnt(@Param("member_id")Long member_id); // 리뷰수

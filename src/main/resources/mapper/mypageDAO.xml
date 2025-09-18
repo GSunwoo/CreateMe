@@ -3,7 +3,7 @@
    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.farm.service.IMypageService">
+<mapper namespace="com.mypage.mapper.IMypageMapper">
 	<!--             구매자용 DAO                   -->
 	<!-- 해당 멤버의 결제완료된 구매건수 -->
 	<select id="getOrderCnt"
