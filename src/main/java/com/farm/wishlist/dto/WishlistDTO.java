@@ -1,4 +1,4 @@
-package com.farm.dto;
+package com.farm.wishlist.dto;
 
 import lombok.Data;
 

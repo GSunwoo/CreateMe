@@ -1,4 +1,4 @@
-package com.farm.controller;
+package com.farm.purchase.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.farm.dto.WishlistDTO;
 import com.farm.login.config.CustomUserDetails;
 import com.farm.member.dto.AddressDTO;
 import com.farm.member.dto.MemberDTO;
 import com.farm.member.mapper.IMemberMapper;
-import com.farm.service.IPurchaseService;
+import com.farm.purchase.mapper.IPurchaseService;
+import com.farm.wishlist.dto.WishlistDTO;
 
 @Controller
 public class PurchaseController {

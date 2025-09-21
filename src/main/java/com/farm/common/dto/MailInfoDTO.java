@@ -1,4 +1,4 @@
-package com.farm.dto;
+package com.farm.common.dto;
 
 import lombok.Data;
 

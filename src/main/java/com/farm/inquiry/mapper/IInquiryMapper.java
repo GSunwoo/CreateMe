@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.farm.dto.PageDTO;
+import com.farm.common.dto.PageDTO;
 import com.farm.inquiry.dto.CommentsDTO;
 import com.farm.inquiry.dto.InquiryDTO;
 

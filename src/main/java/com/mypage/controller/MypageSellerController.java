@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.farm.common.dto.MailInfoDTO;
+import com.farm.common.dto.ParameterDTO;
+import com.farm.common.dto.PassFindDTO;
+import com.farm.common.mapper.IPassFinderMapper;
 import com.farm.controller.PriceController;
-import com.farm.dto.MailInfoDTO;
-import com.farm.dto.OrderDTO;
-import com.farm.dto.ParameterDTO;
-import com.farm.dto.PassFindDTO;
 import com.farm.dto.ProductDTO;
 import com.farm.etc.PassFindMail;
 import com.farm.etc.RandomPasswordGenerator;
@@ -34,8 +34,8 @@ import com.farm.member.mapper.IMemberFormMapper;
 import com.farm.member.mapper.IMemberMapper;
 import com.farm.review.dto.ReviewBoardDTO;
 import com.farm.review.service.ReviewBoardService;
-import com.farm.service.IOrderService;
-import com.farm.service.IPassFinderService;
+import com.farm.purchase.dto.OrderDTO;
+import com.farm.purchase.mapper.IOrderService;
 import com.mypage.mapper.IMypageMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -68,7 +68,7 @@ public class MypageSellerController {
    IMemberFormMapper memfDao;
    
    @Autowired
-   IPassFinderService mailDao;
+   IPassFinderMapper mailDao;
    @Autowired
    PassFindMail mailsender;
 

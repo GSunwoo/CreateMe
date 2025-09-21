@@ -1,11 +1,11 @@
-package com.farm.service;
+package com.farm.purchase.mapper;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.farm.dto.OrderCacheDTO;
+import com.farm.purchase.dto.OrderCacheDTO;
 
 @Mapper
 public interface IOrderCacheService {

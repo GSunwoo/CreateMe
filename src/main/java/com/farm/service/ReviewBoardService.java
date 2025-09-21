@@ -1,4 +1,4 @@
-package com.farm.review.service;
+package com.farm.service;
 
 import java.util.ArrayList;
 import java.util.List;

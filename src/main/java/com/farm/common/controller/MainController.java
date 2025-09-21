@@ -1,4 +1,4 @@
-package com.farm.controller;
+package com.farm.common.controller;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.farm.common.dto.ParameterDTO;
 import com.farm.dto.ProductDTO;
 import com.farm.login.config.CustomUserDetails;
 import com.farm.member.dto.MemberDTO;

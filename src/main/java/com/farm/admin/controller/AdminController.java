@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.farm.admin.mapper.IAdminConfirmMapper;
-import com.farm.dto.PageDTO;
-import com.farm.dto.ParameterDTO;
+import com.farm.common.dto.PageDTO;
+import com.farm.common.dto.ParameterDTO;
 import com.farm.dto.ProductDTO;
 import com.farm.member.dto.FarmDTO;
 import com.farm.member.dto.MemberDTO;

@@ -7,7 +7,7 @@
 <mapper namespace="com.farm.service.IFarmService">
 	
 	<select id="selectFarmInfo" parameterType="long" 
-		resultType="com.farm.dto.FarmDTO">
+		resultType="com.farm.member.dto.FarmDTO">
 		SELECT *
 		FROM farm
 		WHERE member_id = #{member_id}
@@ -17,7 +17,7 @@
 		DELETE FROM farm WHERE member_id = #{member_id}
 	</delete>
 	
-	<insert id="insertFarm" parameterType="com.farm.dto.FarmDTO">
+	<insert id="insertFarm" parameterType="com.farm.member.dto.FarmDTO">
 		INSERT INTO farm (farm_id, member_id, account, bank,
 			brand_name, com_addr1, com_addr2, com_zip, depositor, owner_name)
 		VALUES (#{farm_id}, #{member_id}, #{account}, #{bank}, 
