@@ -1,4 +1,4 @@
-package com.farm.service;
+package com.farm.review.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.junit.runners.Parameterized.Parameters;
 
 import com.farm.dto.PageDTO;
-import com.farm.dto.ReviewBoardDTO;
+import com.farm.review.dto.ReviewBoardDTO;
 
 import lombok.experimental.PackagePrivate;
 

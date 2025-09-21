@@ -25,14 +25,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.farm.dto.OrderDTO;
 import com.farm.dto.ParameterDTO;
 import com.farm.dto.ProductDTO;
-import com.farm.dto.ReviewBoardDTO;
 import com.farm.login.config.CustomUserDetails;
 import com.farm.member.dto.AddressDTO;
 import com.farm.member.dto.MemberDTO;
 import com.farm.member.mapper.IMemberFormMapper;
 import com.farm.member.mapper.IMemberMapper;
+import com.farm.review.dto.ReviewBoardDTO;
+import com.farm.review.service.ReviewBoardService;
 import com.farm.service.IOrderService;
-import com.farm.service.ReviewBoardService;
 import com.mypage.mapper.IMypageMapper;
 
 import jakarta.servlet.http.HttpServletRequest;

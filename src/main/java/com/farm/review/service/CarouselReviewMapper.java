@@ -1,11 +1,11 @@
-package com.farm.service;
+package com.farm.review.service;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.farm.dto.ReviewBoardDTO;
+import com.farm.review.dto.ReviewBoardDTO;
 
 @Mapper
 public interface CarouselReviewMapper {

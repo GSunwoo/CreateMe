@@ -1,9 +1,9 @@
-package com.farm.service;
+package com.farm.review.service;
 
 import java.util.ArrayList;
 import org.apache.ibatis.annotations.Mapper;
 
-import com.farm.dto.ReviewImgDTO;
+import com.farm.review.dto.ReviewImgDTO;
 
 @Mapper
 public interface ReviewImgService {

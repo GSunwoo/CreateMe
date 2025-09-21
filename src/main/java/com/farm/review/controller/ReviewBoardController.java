@@ -1,4 +1,4 @@
-package com.farm.controller;
+package com.farm.review.controller;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -23,14 +23,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.farm.dto.PageDTO;
-import com.farm.dto.ReviewBoardDTO;
-import com.farm.dto.ReviewImgDTO;
 import com.farm.login.config.CustomUserDetails;
 import com.farm.member.dto.MemberDTO;
-import com.farm.service.ReviewBoardService;
-import com.farm.service.ReviewCarouselService;
-import com.farm.service.ReviewImgService;
-import com.farm.service.ReviewLikeService;
+import com.farm.review.dto.ReviewBoardDTO;
+import com.farm.review.dto.ReviewImgDTO;
+import com.farm.review.service.ReviewBoardService;
+import com.farm.review.service.ReviewCarouselService;
+import com.farm.review.service.ReviewImgService;
+import com.farm.review.service.ReviewLikeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,4 +1,4 @@
-package com.farm.dto;
+package com.farm.review.dto;
 
 import java.io.Serializable;
 import java.util.Objects;

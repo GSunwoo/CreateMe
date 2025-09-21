@@ -1,6 +1,7 @@
-package com.farm.service;
+package com.farm.review.service;
 
 import org.springframework.stereotype.Service;
+
 import jakarta.transaction.Transactional;
 
 @Service

@@ -4,7 +4,7 @@ package com.farm.entity;
 import java.sql.Date;
 import java.time.LocalDate;
 
-import com.farm.dto.ReviewLikeId;
+import com.farm.review.dto.ReviewLikeId;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;

@@ -1,10 +1,10 @@
-package com.farm.service;
+package com.farm.review.service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.farm.dto.ReviewBoardDTO;
+import com.farm.review.dto.ReviewBoardDTO;
 
 import lombok.RequiredArgsConstructor;
 
