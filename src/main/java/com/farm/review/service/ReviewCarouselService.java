@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.farm.review.dto.ReviewBoardDTO;
+import com.farm.review.mapper.CarouselReviewMapper;
 
 import lombok.RequiredArgsConstructor;
 

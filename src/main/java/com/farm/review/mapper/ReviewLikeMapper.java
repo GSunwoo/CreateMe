@@ -1,14 +1,14 @@
-package com.farm.review.service;
+package com.farm.review.mapper;
 
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 
 @Service
-public class ReviewLikeService {
+public class ReviewLikeMapper {
 	
-		ReviewBoardService reviewboardservice;
-	    public ReviewLikeService(ReviewBoardService reviewboardservice) {
+		ReviewBoardMapper reviewboardservice;
+	    public ReviewLikeMapper(ReviewBoardMapper reviewboardservice) {
 	        this.reviewboardservice = reviewboardservice;
 	    }
 

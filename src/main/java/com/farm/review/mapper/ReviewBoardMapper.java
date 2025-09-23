@@ -1,4 +1,4 @@
-package com.farm.review.service;
+package com.farm.review.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import com.farm.review.dto.ReviewBoardDTO;
 import lombok.experimental.PackagePrivate;
 
 @Mapper
-public interface ReviewBoardService {
+public interface ReviewBoardMapper {
 	//목록, 게시물 갯수 카운트
 	public int getTotalCount(ReviewBoardDTO reviewboardDTO);
 	

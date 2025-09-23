@@ -1,4 +1,4 @@
-package com.farm.review.service;
+package com.farm.review.mapper;
 
 import java.util.List;
 

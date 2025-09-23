@@ -30,7 +30,7 @@ import com.farm.member.mapper.IMemberFormMapper;
 import com.farm.member.mapper.IMemberMapper;
 import com.farm.product.dto.ProductDTO;
 import com.farm.review.dto.ReviewBoardDTO;
-import com.farm.review.service.ReviewBoardService;
+import com.farm.review.mapper.ReviewBoardMapper;
 import com.farm.purchase.dto.OrderDTO;
 import com.farm.purchase.mapper.IOrderService;
 import com.mypage.mapper.IMypageMapper;
@@ -56,7 +56,7 @@ public class MypageBuyerController {
 	@Autowired
 	IOrderService orderDAO;
 	@Autowired
-	ReviewBoardService reviewDAO;
+	ReviewBoardMapper reviewDAO;
 	
 	@Autowired
 	IMemberFormMapper mFDao;

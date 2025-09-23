@@ -27,10 +27,10 @@ import com.farm.login.config.CustomUserDetails;
 import com.farm.member.dto.MemberDTO;
 import com.farm.review.dto.ReviewBoardDTO;
 import com.farm.review.dto.ReviewImgDTO;
-import com.farm.review.service.ReviewBoardService;
+import com.farm.review.mapper.ReviewBoardMapper;
+import com.farm.review.mapper.ReviewImgMapper;
+import com.farm.review.mapper.ReviewLikeMapper;
 import com.farm.review.service.ReviewCarouselService;
-import com.farm.review.service.ReviewImgService;
-import com.farm.review.service.ReviewLikeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -42,16 +42,16 @@ public class ReviewBoardController {
 
 
 	@Autowired
-	ReviewBoardService dao;
+	ReviewBoardMapper dao;
 
 	@Autowired
-	ReviewImgService Imgdao;
+	ReviewImgMapper Imgdao;
 	
 	@Autowired
 	private ObjectMapper objectMapper;
 	
 	@Autowired
-	private ReviewLikeService reviewLikeService;
+	private ReviewLikeMapper reviewLikeService;
 	
 	@Autowired
 	ReviewCarouselService reviewCarouselService;

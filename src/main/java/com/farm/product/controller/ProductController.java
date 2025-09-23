@@ -27,7 +27,7 @@ import com.farm.login.config.CustomUserDetailsService;
 import com.farm.member.dto.MemberDTO;
 import com.farm.common.dto.ParameterDTO;
 import com.farm.review.dto.ReviewBoardDTO;
-import com.farm.review.service.ReviewBoardService;
+import com.farm.review.mapper.ReviewBoardMapper;
 import com.farm.product.service.ProductService;
 import com.farm.product.dto.ProductDTO;
 import com.farm.product.dto.ProductImgDTO;
@@ -60,7 +60,7 @@ public class ProductController /*~~(Could not parse as Java)~~>*/{
 	IProductImgMapper imgDao;
 	
 	@Autowired
-	ReviewBoardService revDao;
+	ReviewBoardMapper revDao;
 	
 	@GetMapping("/seller/write.do")
 	public String sellerWrite() {

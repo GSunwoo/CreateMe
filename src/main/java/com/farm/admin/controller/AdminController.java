@@ -26,7 +26,7 @@ import com.farm.member.mapper.IMemberMapper;
 import com.farm.product.dto.ProductDTO;
 import com.farm.product.mapper.IProductMapper;
 import com.farm.review.dto.ReviewBoardDTO;
-import com.farm.review.service.ReviewBoardService;
+import com.farm.review.mapper.ReviewBoardMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -43,7 +43,7 @@ public class AdminController {
 
 	// 리뷰 DAO
 	@Autowired
-	ReviewBoardService reviewDAO;
+	ReviewBoardMapper reviewDAO;
 
 	// 멤버 DAO
 	@Autowired
