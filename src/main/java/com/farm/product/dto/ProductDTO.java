@@ -1,4 +1,4 @@
-package com.farm.product.prod.dto;
+package com.farm.product.dto;
 
 import java.time.LocalDate;
 

@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.farm.member.dto.FarmDTO;
-import com.farm.product.prod.dto.ProductDTO;
+import com.farm.product.dto.ProductDTO;
 
 @Mapper
 public interface IAdminConfirmMapper {

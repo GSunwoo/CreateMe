@@ -1,4 +1,4 @@
-package com.farm.product.prod_img.controller;
+package com.farm.product.controller;
 
 import java.io.File;
 import java.util.List;
@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.farm.product.prod_img.dto.ProductImgDTO;
-import com.farm.product.prod_img.mapper.IProductImgMapper;
+import com.farm.product.dto.ProductImgDTO;
+import com.farm.product.mapper.IProductImgMapper;
 
 import utils.UploadUtils;
 

@@ -1,12 +1,12 @@
-package com.farm.product.prod.service;
+package com.farm.product.service;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.farm.product.prod.dto.ProductDTO;
-import com.farm.product.prod.mapper.IProductMapper;
+import com.farm.product.dto.ProductDTO;
+import com.farm.product.mapper.IProductMapper;
 
 public class ProductService {
 	

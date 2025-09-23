@@ -28,7 +28,7 @@ import com.farm.member.dto.AddressDTO;
 import com.farm.member.dto.MemberDTO;
 import com.farm.member.mapper.IMemberFormMapper;
 import com.farm.member.mapper.IMemberMapper;
-import com.farm.product.prod.dto.ProductDTO;
+import com.farm.product.dto.ProductDTO;
 import com.farm.review.dto.ReviewBoardDTO;
 import com.farm.review.service.ReviewBoardService;
 import com.farm.purchase.dto.OrderDTO;

@@ -1,4 +1,4 @@
-package com.farm.product.prod.mapper;
+package com.farm.product.mapper;
 
 import java.util.ArrayList;
 
@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.farm.common.dto.ParameterDTO;
-import com.farm.product.prod.dto.ProductDTO;
+import com.farm.product.dto.ProductDTO;
 
 @Mapper
 public interface IProductMapper {
