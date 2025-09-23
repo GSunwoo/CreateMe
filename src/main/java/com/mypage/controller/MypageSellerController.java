@@ -24,7 +24,6 @@ import com.farm.common.dto.MailInfoDTO;
 import com.farm.common.dto.ParameterDTO;
 import com.farm.common.dto.PassFindDTO;
 import com.farm.common.mapper.IPassFinderMapper;
-import com.farm.controller.PriceController;
 import com.farm.etc.PassFindMail;
 import com.farm.etc.RandomPasswordGenerator;
 import com.farm.login.config.CustomUserDetails;
@@ -74,8 +73,7 @@ public class MypageSellerController {
 
    
    
-   @Autowired
-   PriceController PC;
+
    
    
    @GetMapping("/seller/mypage.do")

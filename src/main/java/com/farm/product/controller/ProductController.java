@@ -54,8 +54,10 @@ public class ProductController /*~~(Could not parse as Java)~~>*/{
 	private int bestSize;
 	
 	@Autowired
-	ProductService prodService;
+	IProductMapper proDao;
 	
+	@Autowired
+	IProductImgMapper imgDao;
 	
 	@Autowired
 	ReviewBoardService revDao;
@@ -71,10 +73,8 @@ public class ProductController /*~~(Could not parse as Java)~~>*/{
 			@RequestParam("image") List<MultipartFile> files,
 			ProductDTO productDTO) {
 		productDTO.setMember_id(userDetails.getMemberDTO().getMember_id());
-		Map<String, Object> Results = prodService.Write(productDTO);
-		
-		
-		Long prod_id = (Long)Results.get("prod_id");
+		Long prodResult = proDao.productWrite(productDTO);
+		Long prod_id = productDTO.getProd_id();
 		Long last_idx = null;
 		
 		if(!files.isEmpty()) {			
@@ -87,7 +87,68 @@ public class ProductController /*~~(Could not parse as Java)~~>*/{
 	}
 	
 
+	public void insertImg(Long prod_id, Long main_idx,
+			List<MultipartFile> files, Long last_idx) {
+		
+		try {
+			
+			String uploadDir = ResourceUtils.getFile(
+					"classpath:static/uploads/prodimg/prod_id").toPath().toString();
+			System.out.println("저장경로 : " + uploadDir);
+			File dir = new File(uploadDir, String.valueOf(prod_id));
+
+			if(!dir.exists()) {
+				dir.mkdirs();
+			}
+
+			
+			Long i = (last_idx != null) ? last_idx + 1 : 1L;
+			for(MultipartFile file : files) {
+				if (file.isEmpty()) {
+					continue;
+				}
 	
+				String savedFileName =
+						UploadUtils.getNewFileName(file.getOriginalFilename());
+				File dest = new File(dir, savedFileName);
+				file.transferTo(dest);
+				
+				 System.out.println("저장 성공: " + dest.getAbsolutePath());
+				
+				ProductImgDTO productImgDTO = new ProductImgDTO();
+				
+				productImgDTO.setFilename(savedFileName);
+				productImgDTO.setIdx(i);
+				productImgDTO.setProd_id(prod_id);
+				
+				
+				if(i == main_idx) {
+					productImgDTO.setMain_idx(1);
+				}
+				else {
+					productImgDTO.setMain_idx(0);
+				}
+				
+				int insertResult = imgDao.insertImg(productImgDTO);
+				
+				if(insertResult == 1) {
+					System.out.printf("전체 파일 %d 중 %d번째 파일업로드 성공", files.size(), i);
+				}
+				else {
+					System.err.printf("전체 파일 %d 중 %d번째 파일업로드 실패", files.size(), i);
+				}
+				i++;
+			}
+			
+		}
+		catch (Exception e) {
+			System.out.println("이미지 업로드 실패 : ");
+			e.printStackTrace();
+		}
+		
+		
+
+	}
 	
 	
 	@GetMapping("/seller/mylist.do")

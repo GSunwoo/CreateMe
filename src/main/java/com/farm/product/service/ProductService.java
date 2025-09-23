@@ -32,7 +32,7 @@ public class ProductService {
 		}
 		
 		
-		
+		return results;
 		
 	}
 }
