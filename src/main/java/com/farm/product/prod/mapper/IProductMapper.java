@@ -1,4 +1,4 @@
-package com.farm.service;
+package com.farm.product.prod.mapper;
 
 import java.util.ArrayList;
 
@@ -6,12 +6,12 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.farm.common.dto.ParameterDTO;
-import com.farm.dto.ProductDTO;
+import com.farm.product.prod.dto.ProductDTO;
 
 @Mapper
-public interface IProductService {
+public interface IProductMapper {
 	
-	public int productWrite(ProductDTO productDTO);
+	public Long productWrite(ProductDTO productDTO);
 	public ProductDTO selectProductView(@Param("prod_id") Long prod_id);
 	public int getTotalCount(ParameterDTO parameterDTO);
 	

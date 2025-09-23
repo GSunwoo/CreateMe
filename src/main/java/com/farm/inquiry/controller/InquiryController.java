@@ -18,8 +18,8 @@ import com.farm.inquiry.dto.CommentsDTO;
 import com.farm.inquiry.dto.InquiryDTO;
 import com.farm.inquiry.mapper.IInquiryMapper;
 import com.farm.login.config.CustomUserDetails;
+import com.farm.product.prod.mapper.IProductMapper;
 import com.farm.inquiry.mapper.ICommentsMapper;
-import com.farm.service.IProductService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import utils.PagingUtil;

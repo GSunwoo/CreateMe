@@ -23,12 +23,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.farm.common.dto.ParameterDTO;
-import com.farm.dto.ProductDTO;
 import com.farm.login.config.CustomUserDetails;
 import com.farm.member.dto.AddressDTO;
 import com.farm.member.dto.MemberDTO;
 import com.farm.member.mapper.IMemberFormMapper;
 import com.farm.member.mapper.IMemberMapper;
+import com.farm.product.prod.dto.ProductDTO;
 import com.farm.review.dto.ReviewBoardDTO;
 import com.farm.review.service.ReviewBoardService;
 import com.farm.purchase.dto.OrderDTO;

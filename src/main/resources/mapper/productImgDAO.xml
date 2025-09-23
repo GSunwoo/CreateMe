@@ -5,9 +5,9 @@
    
    
 <!-- 상품목록의 섬네일이미지는 게시물DAO쪽에서 관리중 -->
-<mapper namespace="com.farm.service.IProductImgService">
+<mapper namespace="com.farm.product.prod_img.IProductImgMapper">
 	<insert id="insertImg"
-		parameterType="com.farm.dto.ProductImgDTO">
+		parameterType="com.farm.product.prod_img.dto.ProductImgDTO">
 		INSERT INTO product_img
 			(prodimg_id, filename, idx, main_idx, prod_id)	
 		VALUES
@@ -16,7 +16,7 @@
 	
 	<select id="selectImg"
 		parameterType="Long"
-		resultType="com.farm.dto.ProductImgDTO">
+		resultType="com.farm.product.prod_img.dto.ProductImgDTO">
 		SELECT prodimg_id, filename, idx, main_idx, prod_id
 			FROM product_img 
 				WHERE prod_id = #{prod_id} and main_idx != 1
@@ -24,7 +24,7 @@
 	</select>
 	<select id="selectMain"
 		parameterType="Long"
-		resultType="com.farm.dto.ProductImgDTO">
+		resultType="com.farm.product.prod_img.dto.ProductImgDTO">
 		SELECT prodimg_id, filename, idx, main_idx, prod_id
 			FROM product_img 
 				WHERE prod_id = #{prod_id} and main_idx = 1
@@ -32,7 +32,7 @@
 	
 	<select id="selectAllImg"
 		parameterType="Long"
-		resultType="com.farm.dto.ProductImgDTO">
+		resultType="com.farm.product.prod_img.dto.ProductImgDTO">
 		SELECT prodimg_id, filename, idx, main_idx, prod_id
 			FROM product_img 
 				WHERE prod_id = #{prod_id}
@@ -52,6 +52,18 @@
 			WHERE prod_id = #{prod_id} AND idx=#{main_idx}
 	</update>
 	
+	
+	
+	<select id="selectFilename"
+		parameterType="Long">
+		SELECT filename FROM product_img
+		WHERE prod_id = #{prod_id} AND idx=#{idx}
+	</select>
+	<select id="selectAllFilenames"
+		parameterType="Long">
+		SELECT filename FROM product_img
+		WHERE prod_id = #{prod_id}
+	</select>
 	<delete id="deleteImg"
 		parameterType="Long">
 		DELETE FROM product_img 

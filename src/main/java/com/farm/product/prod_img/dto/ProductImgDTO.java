@@ -1,4 +1,4 @@
-package com.farm.dto;
+package com.farm.product.prod_img.dto;
 
 import lombok.Data;
 
