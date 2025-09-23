@@ -27,7 +27,6 @@ import com.purchase.controller.PaymentController;
 import com.purchase.dto.PurchaseDTO;
 import com.purchase.mapper.IPurchaseService;
 import com.review.dto.ReviewBoardDTO;
-import com.review.service.ReviewCarouselService;
 
 
 
@@ -39,20 +38,16 @@ public class MainController {
 	@Autowired
 	IProductMapper proDao;
 	
-	@Autowired
-	private final ReviewCarouselService reviewCarouselService;
 	
 	@Value("${main.bestforweek}")
 	private int bestforweek;
 	
-    MainController(PaymentController paymentController, ReviewCarouselService reviewCarouselService) {
+    MainController(PaymentController paymentController) {
         this.paymentController = paymentController;
-        this.reviewCarouselService = reviewCarouselService;
     }
 	
 	@GetMapping("/")
-	public String main(@AuthenticationPrincipal CustomUserDetails userDetails, Model model,
-			@RequestParam(name = "reviewPage", required = false, defaultValue = "20") int reviewPage) {
+	public String main(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
 		if(userDetails!=null) {
 			MemberDTO member = userDetails.getMemberDTO();
 			System.out.println(member.getName());
@@ -69,10 +64,7 @@ public class MainController {
 
 		model.addAttribute("bests", bests);
 		
-		//서비스에서 리뷰 데이터 가져오기
-	    List<ReviewBoardDTO> reviews = reviewCarouselService.getTopLikedReviews(reviewPage);
-	    
-	    model.addAttribute("reviewPage", reviews);
+		
 		
 		return "main";
 	}
