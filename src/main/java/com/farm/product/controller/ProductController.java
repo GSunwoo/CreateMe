@@ -27,12 +27,12 @@ import com.farm.login.config.CustomUserDetailsService;
 import com.farm.member.dto.MemberDTO;
 import com.farm.common.dto.ParameterDTO;
 import com.farm.review.dto.ReviewBoardDTO;
+import com.farm.review.service.ReviewBoardService;
 import com.farm.product.service.ProductService;
 import com.farm.product.dto.ProductDTO;
 import com.farm.product.dto.ProductImgDTO;
 import com.farm.product.mapper.IProductImgMapper;
 import com.farm.product.mapper.IProductMapper;
-import com.farm.service.ReviewBoardService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.Part;
