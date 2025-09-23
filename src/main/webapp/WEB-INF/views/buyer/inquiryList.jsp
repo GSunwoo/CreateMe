@@ -7,7 +7,7 @@
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.Collections"%>
 <%@ page import="java.util.Comparator"%>
-<%@ page import="com.farm.inquiry.dto.InquiryDTO"%>
+<%@ page import="com.inquiry.dto.InquiryDTO"%>
 
 <!DOCTYPE html>
 <html>
@@ -170,50 +170,50 @@
 <body class="simple-page">
 	<%
 	// 페이지 번호 읽기
-	String pageParam = request.getParameter("page");
-	int currentPage = (pageParam == null || pageParam.equals("")) ? 1 : Integer.parseInt(pageParam);
+		String pageParam = request.getParameter("page");
+		int currentPage = (pageParam == null || pageParam.equals("")) ? 1 : Integer.parseInt(pageParam);
 
-	// 한 페이지당 10개씩
-	int pageSize = 10;
+		// 한 페이지당 10개씩
+		int pageSize = 10;
 
-	// 문의 리스트 받아오기
-	List<com.farm.inquiry.dto.InquiryDTO> inquiryList = (List<com.farm.inquiry.dto.InquiryDTO>) request.getAttribute("inquiries");
+		// 문의 리스트 받아오기
+		List<com.inquiry.dto.InquiryDTO> inquiryList = (List<com.inquiry.dto.InquiryDTO>) request.getAttribute("inquiries");
 
-	// 최신순 정렬 (postdate 기준 내림차순)
-	if (inquiryList != null) {
-		java.util.Collections.sort(inquiryList, new java.util.Comparator<com.farm.inquiry.dto.InquiryDTO>() {
-			@Override
-			public int compare(com.farm.inquiry.dto.InquiryDTO a, com.farm.inquiry.dto.InquiryDTO b) {
-		return b.getPostdate().compareTo(a.getPostdate());
-			}
-		});
-	}
+		// 최신순 정렬 (postdate 기준 내림차순)
+		if (inquiryList != null) {
+			java.util.Collections.sort(inquiryList, new java.util.Comparator<com.inquiry.dto.InquiryDTO>() {
+		@Override
+		public int compare(com.inquiry.dto.InquiryDTO a, com.inquiry.dto.InquiryDTO b) {
+			return b.getPostdate().compareTo(a.getPostdate());
+		}
+			});
+		}
 
-	// 전체 게시글 개수
-	int totalCount = inquiryList != null ? inquiryList.size() : 0;
+		// 전체 게시글 개수
+		int totalCount = inquiryList != null ? inquiryList.size() : 0;
 
-	// 전체 페이지 수
-	int totalPages = (int) Math.ceil((double) totalCount / pageSize);
+		// 전체 페이지 수
+		int totalPages = (int) Math.ceil((double) totalCount / pageSize);
 
-	// 현재 블록 계산
-	int pageBlock = 10;
-	int startPage = ((currentPage - 1) / pageBlock) * pageBlock + 1;
-	int endPage = startPage + pageBlock - 1;
-	if (endPage > totalPages)
-		endPage = totalPages;
+		// 현재 블록 계산
+		int pageBlock = 10;
+		int startPage = ((currentPage - 1) / pageBlock) * pageBlock + 1;
+		int endPage = startPage + pageBlock - 1;
+		if (endPage > totalPages)
+			endPage = totalPages;
 
-	// 현재 페이지에서 보여줄 데이터 인덱스
-	int startIndex = (currentPage - 1) * pageSize;
-	int endIndex = Math.min(startIndex + pageSize, totalCount);
+		// 현재 페이지에서 보여줄 데이터 인덱스
+		int startIndex = (currentPage - 1) * pageSize;
+		int endIndex = Math.min(startIndex + pageSize, totalCount);
 
-	// JSP에서 사용하기 위해 저장
-	request.setAttribute("inquiriesSorted", inquiryList);
-	request.setAttribute("startIndex", startIndex);
-	request.setAttribute("endIndex", endIndex);
-	request.setAttribute("startPage", startPage);
-	request.setAttribute("endPage", endPage);
-	request.setAttribute("totalPages", totalPages);
-	request.setAttribute("currentPage", currentPage);
+		// JSP에서 사용하기 위해 저장
+		request.setAttribute("inquiriesSorted", inquiryList);
+		request.setAttribute("startIndex", startIndex);
+		request.setAttribute("endIndex", endIndex);
+		request.setAttribute("startPage", startPage);
+		request.setAttribute("endPage", endPage);
+		request.setAttribute("totalPages", totalPages);
+		request.setAttribute("currentPage", currentPage);
 	%>
 
 	<!-- 상단 공통 헤더 -->

@@ -20,22 +20,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.farm.common.dto.MailInfoDTO;
-import com.farm.common.dto.ParameterDTO;
-import com.farm.common.dto.PassFindDTO;
-import com.farm.common.mapper.IPassFinderMapper;
-import com.farm.etc.PassFindMail;
-import com.farm.etc.RandomPasswordGenerator;
-import com.farm.login.config.CustomUserDetails;
-import com.farm.member.dto.MemberDTO;
-import com.farm.member.mapper.IMemberFormMapper;
-import com.farm.member.mapper.IMemberMapper;
-import com.farm.product.dto.ProductDTO;
-import com.farm.review.dto.ReviewBoardDTO;
-import com.farm.review.mapper.ReviewBoardMapper;
-import com.farm.purchase.dto.OrderDTO;
-import com.farm.purchase.mapper.IOrderService;
+import com.common.dto.MailInfoDTO;
+import com.common.dto.ParameterDTO;
+import com.common.dto.PassFindDTO;
+import com.common.mapper.IPassFinderMapper;
+import com.etc.PassFindMail;
+import com.etc.RandomPasswordGenerator;
+import com.login.config.CustomUserDetails;
+import com.member.dto.MemberDTO;
+import com.member.mapper.IMemberFormMapper;
+import com.member.mapper.IMemberMapper;
 import com.mypage.mapper.IMypageMapper;
+import com.product.dto.ProductDTO;
+import com.purchase.dto.OrderDTO;
+import com.purchase.mapper.IOrderService;
+import com.review.dto.ReviewBoardDTO;
+import com.review.mapper.ReviewBoardMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
 

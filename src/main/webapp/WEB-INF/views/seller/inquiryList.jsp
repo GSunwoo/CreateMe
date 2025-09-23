@@ -7,7 +7,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Collections" %>
 <%@ page import="java.util.Comparator" %>
-<%@ page import="com.farm.inquiry.dto.InquiryDTO" %>
+<%@ page import="com.inquiry.dto.InquiryDTO" %>
 
 <!DOCTYPE html>
 <html>
@@ -168,7 +168,7 @@
 </head>
 <body class="simple-page">
 <%
-    // 페이지 번호 읽기
+// 페이지 번호 읽기
     String pageParam = request.getParameter("page");
     int currentPage = (pageParam == null || pageParam.equals("")) ? 1 : Integer.parseInt(pageParam);
 
@@ -176,14 +176,14 @@
     int pageSize = 10;
 
     // 문의 리스트 받아오기
-    List<com.farm.inquiry.dto.InquiryDTO> inquiryList =
-        (List<com.farm.inquiry.dto.InquiryDTO>) request.getAttribute("inquiries");
+    List<com.inquiry.dto.InquiryDTO> inquiryList =
+        (List<com.inquiry.dto.InquiryDTO>) request.getAttribute("inquiries");
 
     // 최신순 정렬 (postdate 기준 내림차순)
     if (inquiryList != null) {
-        java.util.Collections.sort(inquiryList, new java.util.Comparator<com.farm.inquiry.dto.InquiryDTO>() {
+        java.util.Collections.sort(inquiryList, new java.util.Comparator<com.inquiry.dto.InquiryDTO>() {
             @Override
-            public int compare(com.farm.inquiry.dto.InquiryDTO a, com.farm.inquiry.dto.InquiryDTO b) {
+            public int compare(com.inquiry.dto.InquiryDTO a, com.inquiry.dto.InquiryDTO b) {
                 return b.getPostdate().compareTo(a.getPostdate());
             }
         });

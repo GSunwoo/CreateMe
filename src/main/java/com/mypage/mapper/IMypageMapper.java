@@ -6,9 +6,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.farm.member.dto.FarmDTO;
-import com.farm.product.dto.ProductDTO;
-import com.farm.review.dto.ReviewBoardDTO;
+import com.member.dto.FarmDTO;
+import com.product.dto.ProductDTO;
+import com.review.dto.ReviewBoardDTO;
 
 @Mapper
 public interface IMypageMapper {
