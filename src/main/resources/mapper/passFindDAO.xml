@@ -3,11 +3,11 @@
    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.farm.common.mapper.IPassFinderMapper">
+<mapper namespace="com.common.mapper.IPassFinderMapper">
 	<!-- 유저 찾기 -->
 	<select id="findUser"
 		resultType="long"
-		parameterType="com.farm.dto.PassFindDTO">
+		parameterType="com.common.dto.PassFindDTO">
 		SELECT member_id FROM member
 		WHERE user_id = #{user_id}
 		  AND name = #{name}
@@ -22,7 +22,7 @@
 	</update>
 	
 	<select id="selectEmail" parameterType="Long"
-		resultType="com.farm.dto.PassFindDTO">
+		resultType="com.common.dto.PassFindDTO">
 		SELECT emailid, emaildomain, name FROM member
 		WHERE member_id = #{member_id}
 	</select>

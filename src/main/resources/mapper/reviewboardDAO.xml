@@ -5,10 +5,10 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 컨트롤러가 호출하는 인터페이스 위치를 namespace로 설정 -->
-<mapper namespace="com.farm.review.mapper.ReviewBoardMapper">
+<mapper namespace="com.review.mapper.ReviewBoardMapper">
 
 	<select id="getTotalCount" resultType="int"
-			parameterType="com.farm.dto.ReviewBoardDTO">
+			parameterType="com.review.dto.ReviewBoardDTO">
 			
 			SELECT COUNT(*) FROM review
 			
@@ -20,8 +20,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 리스트 -->
 	<select id="listPage"
-	      parameterType="com.farm.review.dto.PageDTO"
-	      resultType="com.farm.review.dto.ReviewBoardDTO">
+	      parameterType="com.common.dto.PageDTO"
+	      resultType="com.review.dto.ReviewBoardDTO">
 	      SELECT rev.review_id, rev.member_id, rev.postdate, rev.title, rev.content, rev.star, rev.evaluation, rev.review_like, 
 	      		 rev.prod_id, img.filename, prod_name, rev.purc_id, rev.name
 	      FROM (SELECT Tb.*,  rownum rNum FROM (
@@ -43,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- id="" -> 이 SQL의 이름(식별자).자바 코드에서 이걸 호출할 때 view()라고 부름-->
 	<select id="selectView" 
 		parameterType="long"
-		resultType="com.farm.review.dto.ReviewBoardDTO">
+		resultType="com.review.dto.ReviewBoardDTO">
 		<!-- WHERE review_id=#{review_id} BoardDTO 안의 review_id필드를 기준으로
 		해당 글 1개를 조회함 -->
   		SELECT * FROM review WHERE review_id = #{review_id}
@@ -76,7 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	 	WHERE review_id = #{reviewId}
   	 </delete>
 	
-	<insert id="write" parameterType="com.farm.review.dto.ReviewBoardDTO">
+	<insert id="write" parameterType="com.review.dto.ReviewBoardDTO">
 	<selectKey keyProperty="review_id" resultType="long" order="BEFORE">
 		SELECT seq_review_id.nextval FROM dual
 	</selectKey>
@@ -94,7 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 상품상세페이지랑 연동 -->
 	<select id="loadReview" parameterType="Long"
-		resultType="com.farm.review.dto.ReviewBoardDTO">
+		resultType="com.review.dto.ReviewBoardDTO">
 		SELECT 
 		    rev.postdate,
 			rev.star,

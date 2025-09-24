@@ -3,15 +3,15 @@
    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.farm.service.IPayService">
+<mapper namespace="com.purchase.service.IPayService">
 	<select id="getOrderInfoMember"
-		resultType="com.farm.dto.PayDTO">
+		resultType="com.purchase.dto.PayDTO">
 		SELECT member_id, name, phone_num, emailid, emaildomain
 		FROM member
 		WHERE member_id = #{member_id}
 	</select>
 	<select id="getOrderInfoProduct"
-		resultType="com.farm.dto.PayDTO">
+		resultType="com.purchase.dto.PayDTO">
 		SELECT prod_id, prod_name, prod_price
 		FROM product
 		WHERE prod_id = #{prod_id}

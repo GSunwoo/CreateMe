@@ -5,9 +5,9 @@
    
    
 <!-- 상품목록의 섬네일이미지는 게시물DAO쪽에서 관리중 -->
-<mapper namespace="com.farm.product.prod_img.IProductImgMapper">
+<mapper namespace="com.product.mapper.IProductImgMapper">
 	<insert id="insertImg"
-		parameterType="com.farm.product.prod_img.dto.ProductImgDTO">
+		parameterType="com.product.dto.ProductImgDTO">
 		INSERT INTO product_img
 			(prodimg_id, filename, idx, main_idx, prod_id)	
 		VALUES
@@ -19,7 +19,7 @@
 	장점이 있을듯 -->
 	<select id="selectImg"
 		parameterType="Long"
-		resultType="com.farm.product.prod_img.dto.ProductImgDTO">
+		resultType="com.product.dto.ProductImgDTO">
 		SELECT prodimg_id, filename, idx, main_idx, prod_id
 			FROM product_img 
 				WHERE prod_id = #{prod_id} and main_idx != 1
@@ -27,7 +27,7 @@
 	</select>
 	<select id="selectMain"
 		parameterType="Long"
-		resultType="com.farm.product.prod_img.dto.ProductImgDTO">
+		resultType="com.product.dto.ProductImgDTO">
 		SELECT prodimg_id, filename, idx, main_idx, prod_id
 			FROM product_img 
 				WHERE prod_id = #{prod_id} and main_idx = 1
@@ -35,7 +35,7 @@
 	
 	<select id="selectAllImg"
 		parameterType="Long"
-		resultType="com.farm.product.prod_img.dto.ProductImgDTO">
+		resultType="com.product.dto.ProductImgDTO">
 		SELECT prodimg_id, filename, idx, main_idx, prod_id
 			FROM product_img 
 				WHERE prod_id = #{prod_id}

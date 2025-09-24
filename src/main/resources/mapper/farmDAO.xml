@@ -4,10 +4,10 @@
    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.farm.service.IFarmService">
+<mapper namespace="com.service.IFarmService">
 	
 	<select id="selectFarmInfo" parameterType="long" 
-		resultType="com.farm.member.dto.FarmDTO">
+		resultType="com.member.dto.FarmDTO">
 		SELECT *
 		FROM farm
 		WHERE member_id = #{member_id}
@@ -17,7 +17,7 @@
 		DELETE FROM farm WHERE member_id = #{member_id}
 	</delete>
 	
-	<insert id="insertFarm" parameterType="com.farm.member.dto.FarmDTO">
+	<insert id="insertFarm" parameterType="com.member.dto.FarmDTO">
 		INSERT INTO farm (farm_id, member_id, account, bank,
 			brand_name, com_addr1, com_addr2, com_zip, depositor, owner_name)
 		VALUES (#{farm_id}, #{member_id}, #{account}, #{bank}, 

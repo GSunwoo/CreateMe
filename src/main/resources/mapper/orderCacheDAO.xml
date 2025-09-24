@@ -3,9 +3,9 @@
    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.farm.purchase.mapper.IOrderCacheService">
+<mapper namespace="com.purchase.mapper.IOrderCacheService">
 	<insert id="insertOrderCache"
-		parameterType="com.farm.purchase.dto.OrderCacheDTO">
+		parameterType="com.purchase.dto.OrderCacheDTO">
 	INSERT INTO order_cache (prod_id, order_num, qty, wish_id)
 		VALUES (#{prod_id}, #{order_num}, #{qty}, #{wish_id})
 	</insert>
@@ -13,7 +13,7 @@
 	DELETE FROM order_cache WHERE order_num=#{order_num}
 	</delete>
 	<select id="selectOrderCache"
-		resultType="com.farm.purchase.dto.OrderCacheDTO">
+		resultType="com.purchase.dto.OrderCacheDTO">
 	SELECT * FROM order_cache WHERE order_num=#{order_num}
 	</select>
 </mapper>
