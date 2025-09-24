@@ -14,6 +14,9 @@
 			(seq_productimg_id.nextval, #{filename} ,#{idx} , #{main_idx} ,#{prod_id})
 	</insert>
 	
+	<!-- 이거 메인인덱스로 역정렬하면 메인을 항상 첫번째로 오게 할 수 있음
+	jsp에서 분배하는 방식은 고민좀 해봐야되겠지만 쿼리를 한번만 해도 된다는 
+	장점이 있을듯 -->
 	<select id="selectImg"
 		parameterType="Long"
 		resultType="com.farm.product.prod_img.dto.ProductImgDTO">
