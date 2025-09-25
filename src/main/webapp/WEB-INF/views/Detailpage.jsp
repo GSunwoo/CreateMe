@@ -23,13 +23,15 @@
 	<%@ include file="./common/header.jsp"%>
 
 	<div class="dp-wrap">
-		<c:if test="${not empty main}">
-			<div class="dp-left">
-				<div class="dp-mainimg">
-					<img src="${pageContext.request.contextPath}/uploads/prodimg/prod_id/${main.prod_id}/${main.filename}"
-						alt="${main.filename}" />
+		<c:if test="${not empty mainImg}">
+			<c:forEach var="main" items="${mainImg}">
+				<div class="dp-left">
+					<div class="dp-mainimg">
+						<img src="${pageContext.request.contextPath}/uploads/prodimg/prod_id/${main.prod_id}/${main.filename}"
+							alt="${main.filename}" />
+					</div>
 				</div>
-			</div>
+			</c:forEach>
 		</c:if>
 
 
@@ -101,8 +103,8 @@
 					<div class="tab-panel is-active">
 						<p>${productDTO.prod_content}</p>
 						<%-- 필요하면 더미 문단 추가해서 줄수 맞춰보기 --%>
-						<c:if test="${not empty imglist}">
-							<c:forEach var="img" items="${imglist}">
+						<c:if test="${not empty subImgs}">
+							<c:forEach var="img" items="${subImgs}">
 								<div class="dp-left">
 									<div class="dp-mainimg">
 										<img src="${pageContext.request.contextPath}/uploads/prodimg/prod_id/${img.prod_id}/${img.filename}"

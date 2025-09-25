@@ -22,16 +22,10 @@
 		resultType="com.product.dto.ProductImgDTO">
 		SELECT prodimg_id, filename, idx, main_idx, prod_id
 			FROM product_img 
-				WHERE prod_id = #{prod_id} and main_idx != 1
-					ORDER BY IDX ASC
+				WHERE prod_id = #{prod_id}
+					ORDER BY main_idx DESC, idx ASC
 	</select>
-	<select id="selectMain"
-		parameterType="Long"
-		resultType="com.product.dto.ProductImgDTO">
-		SELECT prodimg_id, filename, idx, main_idx, prod_id
-			FROM product_img 
-				WHERE prod_id = #{prod_id} and main_idx = 1
-	</select>
+	
 	
 	<select id="selectAllImg"
 		parameterType="Long"
@@ -39,7 +33,7 @@
 		SELECT prodimg_id, filename, idx, main_idx, prod_id
 			FROM product_img 
 				WHERE prod_id = #{prod_id}
-					ORDER BY IDX ASC
+					ORDER BY main_idx DESC, idx ASC
 	</select>
 	
 	<update id="makeZero"
