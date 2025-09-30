@@ -42,8 +42,4 @@ public class PassFinderService {
         return true;
     }
 	
-	public PassFindDTO getEmail(Long member_id) {
-		return passDAO.selectEmail(member_id);
-	}
-	
 }
