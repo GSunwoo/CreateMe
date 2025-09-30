@@ -3,6 +3,7 @@ package com.common.service;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.stereotype.Service;
 
 import com.common.dto.MailInfoDTO;
 import com.common.dto.PassFindDTO;
@@ -12,6 +13,7 @@ import com.etc.RandomPasswordGenerator;
 
 import jakarta.transaction.Transactional;
 
+@Service
 public class PassFinderService {
 	
 	@Autowired
