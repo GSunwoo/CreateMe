@@ -65,7 +65,7 @@
 	</select>
 	<!-- 판매자가 등록한 상품 -->
 	<select id="getMyProducts"
-		resultType="com.farm.dto.ProductDTO">
+		resultType="com.product.dto.ProductDTO">
 		SELECT *
 			FROM product
 			WHERE member_id=#{member_id}
@@ -74,7 +74,7 @@
 
 	<!-- 판매자의 상품에 등록된 리뷰 -->
 	<select id="getMyReviews"
-		resultType="com.farm.dto.ReviewBoardDTO">
+		resultType="com.review.dto.ReviewBoardDTO">
 		SELECT re.review_id, re.member_id, re.postdate, re.title, re.content, re.star, 
 			   re.evaluation, re.review_like, re.prod_id
 			FROM review re

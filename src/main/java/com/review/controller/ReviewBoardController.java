@@ -31,7 +31,6 @@ import com.review.dto.ReviewImgDTO;
 import com.review.mapper.ReviewBoardMapper;
 import com.review.mapper.ReviewImgMapper;
 import com.review.mapper.ReviewLikeMapper;
-import com.review.service.ReviewCarouselService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.Part;
@@ -53,8 +52,6 @@ public class ReviewBoardController {
 	@Autowired
 	private ReviewLikeMapper reviewLikeService;
 	
-	@Autowired
-	ReviewCarouselService reviewCarouselService;
 	
 	
 	//목록
@@ -67,8 +64,6 @@ public class ReviewBoardController {
 		pageDTO.setStart(1);
 		pageDTO.setEnd(20);
 		ArrayList<ReviewBoardDTO> lists = dao.listPage(pageDTO);
-		List<ReviewBoardDTO> bests = reviewCarouselService.getTopLikedReviews(reviewPage);
-		System.out.println(bests.get(0).getProd_id());
 		//일반리뷰
 		for(int i = 0 ; i < lists.size() ; i ++) {
 			ReviewBoardDTO review = lists.get(i);
@@ -82,21 +77,6 @@ public class ReviewBoardController {
 				review.setReview_liked(false);
 			}
 		}
-		//베스트리뷰
-		for(int i = 0 ; i < bests.size() ; i ++) {
-			ReviewBoardDTO review = bests.get(i);
-			review.setReview_like(dao.countLike(review.getReview_id()));
-			if(userDetails!=null) {
-				Long logindata = userDetails.getMemberDTO().getMember_id();
-				review.setReview_liked(dao.existsLike(review.getReview_id(), logindata)==1 ? true : false);
-				System.out.println(Boolean.toString(review.isReview_liked()) + " memberId : " + logindata);				
-			}
-			else {
-				review.setReview_liked(false);
-			}
-		}
-		
-		model.addAttribute("bests", bests);
 		model.addAttribute("reviewList", lists);
 		return "review/reviewPage";
 	}

@@ -3,10 +3,10 @@
    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
    
-<mapper namespace="com.farm.inquiry.mapper.IInquiryMapper">
+<mapper namespace="com.inquiry.mapper.IInquiryMapper">
    <!-- 문의 조회 -->
     <select id="getTotalCount1"
-    parameterType="com.farm.dto.InquiryDTO">
+    parameterType="com.inquiry.dto.InquiryDTO">
     SELECT COUNT(*) FROM inquiry
     	WHERE member_id = #{member_id}
     </select>
@@ -19,8 +19,8 @@
     </select>
     
    <select id="selectInq1"
-   parameterType="com.farm.dto.PageDTO"
-   resultType="com.farm.inquiry.dto.InquiryDTO">
+   parameterType="com.common.dto.PageDTO"
+   resultType="com.inquiry.dto.InquiryDTO">
    SELECT 
 	    inq.inquiry_id,
 	    inq.prod_id,
@@ -49,7 +49,7 @@
    
    <select id="selectInq2"
    parameterType="Long"
-   resultType="com.farm.inquiry.dto.InquiryDTO">
+   resultType="com.inquiry.dto.InquiryDTO">
    SELECT inq.inquiry_id, inq.prod_id, inq.content, inq.member_id, inq.title, inq.postdate AS postdate, pro.prod_name, COUNT(com.inquiry_id) AS com_count
          FROM inquiry inq
          INNER JOIN product pro ON inq.prod_id = pro.prod_id
@@ -68,7 +68,7 @@
    <!-- 조인걸어서 가야돼 멤버 -->
    <!-- 문의 등록 -->
    <insert id="insertInq"
-      parameterType="com.farm.inquiry.dto.InquiryDTO">
+      parameterType="com.inquiry.dto.InquiryDTO">
       INSERT INTO inquiry
          (prod_id, content, title, member_id)   
       VALUES
@@ -77,7 +77,7 @@
    
    <!-- 문의 수정 -->
    <update id="updateInquiry"
-      parameterType="com.farm.inquiry.dto.InquiryDTO">
+      parameterType="com.inquiry.dto.InquiryDTO">
       UPDATE inquiry 
          SET title = #{title}, content = #{content}
             WHERE inquiry_id = #{inquiry_id}
@@ -91,8 +91,8 @@
    
    <!-- mapper/inquiryDAO.xml (namespace는 그대로) -->
 <select id="inquiryDetail"
-        parameterType="com.farm.inquiry.dto.InquiryDTO"
-        resultType="com.farm.inquiry.dto.InquiryDTO">
+        parameterType="com.inquiry.dto.InquiryDTO"
+        resultType="com.inquiry.dto.InquiryDTO">
   SELECT inquiry_id, inquiry.prod_id, inquiry.content, inquiry.member_id, inquiry.title, inquiry.postdate, member.user_id, product.prod_name
   FROM inquiry
   LEFT JOIN product

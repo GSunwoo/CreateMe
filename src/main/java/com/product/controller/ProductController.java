@@ -40,398 +40,354 @@ import jakarta.transaction.Transactional;
 import utils.PagingUtil;
 import utils.UploadUtils;
 
-
 @Controller
-public class ProductController /*~~(Could not parse as Java)~~>*/{
-	
+public class ProductController /* ~~(Could not parse as Java)~~> */ {
+
 	@Value("${board.pageSize}")
 	private int pageSize;
-	
+
 	@Value("${board.blockPage}")
 	private int blockPage;
-	
+
 	@Value("${board.bestSize}")
 	private int bestSize;
-	
+
 	@Autowired
 	IProductMapper proDao;
-	
+
 	@Autowired
 	IProductImgMapper imgDao;
-	
+
 	@Autowired
 	ReviewBoardMapper revDao;
-	
+
 	@GetMapping("/seller/write.do")
 	public String sellerWrite() {
 		return "seller/productWrite";
 	}
+
 	@PostMapping("/seller/write.do")
-	public String sellerWrite2(
-			@AuthenticationPrincipal CustomUserDetails userDetails,
-			@RequestParam("main_idx") Long main_idx,
-			@RequestParam("image") List<MultipartFile> files,
+	public String sellerWrite2(@AuthenticationPrincipal CustomUserDetails userDetails,
+			@RequestParam("main_idx") Long main_idx, @RequestParam("image") List<MultipartFile> files,
 			ProductDTO productDTO) {
 		productDTO.setMember_id(userDetails.getMemberDTO().getMember_id());
 		Long prodResult = proDao.productWrite(productDTO);
 		Long prod_id = productDTO.getProd_id();
 		Long last_idx = null;
-		
-		if(!files.isEmpty()) {			
+
+		if (!files.isEmpty()) {
 			insertImg(prod_id, main_idx, files, last_idx);
 		}
-		
-		
 
-		return "redirect:/guest/Detailpage.do?prod_id="+prod_id;
+		return "redirect:/guest/Detailpage.do?prod_id=" + prod_id;
 	}
-	
 
-	public void insertImg(Long prod_id, Long main_idx,
-			List<MultipartFile> files, Long last_idx) {
-		
+	public void insertImg(Long prod_id, Long main_idx, List<MultipartFile> files, Long last_idx) {
+
 		try {
-			
-			String uploadDir = ResourceUtils.getFile(
-					"classpath:static/uploads/prodimg/prod_id").toPath().toString();
+
+			String uploadDir = ResourceUtils.getFile("classpath:static/uploads/prodimg/prod_id").toPath().toString();
 			System.out.println("저장경로 : " + uploadDir);
 			File dir = new File(uploadDir, String.valueOf(prod_id));
 
-			if(!dir.exists()) {
+			if (!dir.exists()) {
 				dir.mkdirs();
 			}
 
-			
 			Long i = (last_idx != null) ? last_idx + 1 : 1L;
-			for(MultipartFile file : files) {
+			for (MultipartFile file : files) {
 				if (file.isEmpty()) {
 					continue;
 				}
-	
-				String savedFileName =
-						UploadUtils.getNewFileName(file.getOriginalFilename());
+
+				String savedFileName = UploadUtils.getNewFileName(file.getOriginalFilename());
 				File dest = new File(dir, savedFileName);
 				file.transferTo(dest);
-				
-				 System.out.println("저장 성공: " + dest.getAbsolutePath());
-				
+
+				System.out.println("저장 성공: " + dest.getAbsolutePath());
+
 				ProductImgDTO productImgDTO = new ProductImgDTO();
-				
+
 				productImgDTO.setFilename(savedFileName);
 				productImgDTO.setIdx(i);
 				productImgDTO.setProd_id(prod_id);
-				
-				
-				if(i == main_idx) {
+
+				if (i == main_idx) {
 					productImgDTO.setMain_idx(1);
-				}
-				else {
+				} else {
 					productImgDTO.setMain_idx(0);
 				}
-				
+
 				int insertResult = imgDao.insertImg(productImgDTO);
-				
-				if(insertResult == 1) {
+
+				if (insertResult == 1) {
 					System.out.printf("전체 파일 %d 중 %d번째 파일업로드 성공", files.size(), i);
-				}
-				else {
+				} else {
 					System.err.printf("전체 파일 %d 중 %d번째 파일업로드 실패", files.size(), i);
 				}
 				i++;
 			}
-			
-		}
-		catch (Exception e) {
+
+		} catch (Exception e) {
 			System.out.println("이미지 업로드 실패 : ");
 			e.printStackTrace();
 		}
-		
-		
 
 	}
-	
-	
+
 	@GetMapping("/seller/mylist.do")
-	public String mylist(@AuthenticationPrincipal CustomUserDetails userDetails,
-			Model model) {
-		
+	public String mylist(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+
 		Long member_id = userDetails.getMemberDTO().getMember_id();
-		
+
 		ArrayList<ProductDTO> mylist = proDao.selectMyprod(member_id);
 		model.addAttribute("mylist", mylist);
-		
-		
+
 		return "seller/myprodlist";
 	}
-	
-	
+
 	@GetMapping("/guest/productList.do")
-	public String productList(HttpServletRequest req,
-			ProductDTO productDTO, Model model,
-			ParameterDTO parameterDTO) {
-		
-		
-		
-		int pageNum = (req.getParameter("pageNum") == null
-				|| req.getParameter("pageNum").equals(""))
-				? 1 : Integer.parseInt(req.getParameter("pageNum"));
-		
+	public String productList(HttpServletRequest req, ProductDTO productDTO, Model model, ParameterDTO parameterDTO) {
+
+		int pageNum = (req.getParameter("pageNum") == null || req.getParameter("pageNum").equals("")) ? 1
+				: Integer.parseInt(req.getParameter("pageNum"));
+
 		parameterDTO.setStart((pageNum - 1) * pageSize + 1);
-	    parameterDTO.setEnd(pageNum * pageSize);
-		
-	    
-	    if(parameterDTO.getSearchWord() != null && 
-	    		!parameterDTO.getSearchWord().trim().equals("")) {
-	    	parameterDTO.setSearchWords(Arrays.asList(
-	    			parameterDTO.getSearchWord().trim().split(" ")));
-	    }
-		
-		
+		parameterDTO.setEnd(pageNum * pageSize);
+
+		if (parameterDTO.getSearchWord() != null && !parameterDTO.getSearchWord().trim().equals("")) {
+			parameterDTO.setSearchWords(Arrays.asList(parameterDTO.getSearchWord().trim().split(" ")));
+		}
+
 		int totalCount = proDao.getTotalCount(parameterDTO);
 		System.out.println("totalcount" + totalCount);
 		ArrayList<ProductDTO> lists = proDao.selectProduct(parameterDTO);
-		
-		//베스트상품 불러오기
+
+		// 베스트상품 불러오기
 		parameterDTO.setStart((pageNum - 1) * bestSize + 1);
 		parameterDTO.setEnd(pageNum * bestSize);
 		ArrayList<ProductDTO> bests = proDao.selectBestProd(parameterDTO);
 		model.addAttribute("bests", bests);
-		//베스트상품 끝
-		
-		
-		 Map<String, Object> paramMap = new HashMap<>();
-		 	paramMap.put("totalCount", totalCount);
-		    paramMap.put("pageSize", pageSize);
-		    paramMap.put("pageNum", pageNum);
-		    
+		// 베스트상품 끝
+
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("totalCount", totalCount);
+		paramMap.put("pageSize", pageSize);
+		paramMap.put("pageNum", pageNum);
+
 		model.addAttribute("paramMap", paramMap);
-		
-		
+
 		model.addAttribute("lists", lists);
-		if(lists.isEmpty()) {			
+		if (lists.isEmpty()) {
 			System.out.println("리스트 빔?");
 		}
-		
-		String pagingImg = PagingUtil.pagingImg(
-				totalCount, pageSize, blockPage, pageNum, 
-				req.getContextPath()+"/guest/productList.do?");
-		
+
+		String pagingImg = PagingUtil.pagingImg(totalCount, pageSize, blockPage, pageNum,
+				req.getContextPath() + "/guest/productList.do?");
+
 		model.addAttribute("pagingImg", pagingImg);
-		
+
 		return "Productpage";
 	}
-	
+
 	@GetMapping("/guest/Detailpage.do")
-	public String productView(ProductDTO productDTO, Model model,
-			@RequestParam("prod_id") Long prod_id,
-			ProductImgDTO productImgDTO,
-			@AuthenticationPrincipal CustomUserDetails user) {
-		
+	public String productView(ProductDTO productDTO, Model model, @RequestParam("prod_id") Long prod_id,
+			ProductImgDTO productImgDTO, @AuthenticationPrincipal CustomUserDetails user) {
+
 		productDTO = proDao.selectProductView(prod_id);
-		productDTO.setProd_content(productDTO.getProd_content()
-				.replace("\r\n", "<br/>"));
-		
+		productDTO.setProd_content(productDTO.getProd_content().replace("\r\n", "<br/>"));
+
 		model.addAttribute("productDTO", productDTO);
-				
-		
-		// 이미지 불러오기 시작
+
+//		// 이미지 불러오기 시작
+//		ArrayList<ProductImgDTO> imglist = imgDao.selectImg(prod_id);
+//		ProductImgDTO main = imgDao.selectMain(prod_id);
+//		model.addAttribute("main", main);
+//		model.addAttribute("imglist", imglist);
+//		// 이미지 불러오기 끝
+
+		/* 
+		이미지 불러오기 로직 변경
+		기존 : 쿼리를 두번실행해서 메인이미지와 일반이미지를 따로 보냄
+		변경 : 쿼리를 메인컬럼을 기준으로 역정렬하여서 메인이미지를 분리해냄
+		 */
 		ArrayList<ProductImgDTO> imglist = imgDao.selectImg(prod_id);
-		ProductImgDTO main = imgDao.selectMain(prod_id);
-		model.addAttribute("main", main);
-		model.addAttribute("imglist", imglist);
-		// 이미지 불러오기 끝
+		ArrayList<ProductImgDTO> mainImg = new ArrayList<>();
+		ArrayList<ProductImgDTO> subImgs = new ArrayList<>();
+		for(ProductImgDTO img : imglist) {
+			int main = img.getMain_idx();
+			if(main == 1) {
+				mainImg.add(img);
+			}
+			else subImgs.add(img);
+		}
+		model.addAttribute("mainImg", mainImg);
+		model.addAttribute("subImgs", subImgs);
 		
 		List<ReviewBoardDTO> revlist = revDao.loadReview(prod_id);
 
 		// DAO에서 null을 리턴할 수 있다면 → 빈 리스트로 보정
 		if (revlist == null) {
-		    revlist = new ArrayList<>();
+			revlist = new ArrayList<>();
 		}
 		if (user == null) {
 			model.addAttribute("member_id", 0);
-		}
-		else {
+		} else {
 			model.addAttribute("member_id", user.getMemberDTO().getMember_id());
 		}
-		
-		for (ReviewBoardDTO review : revlist) {
-		    if (review != null) {   // ✅ 안전한 null 체크
-		        review.setReview_like(revDao.countLike(review.getReview_id()));
 
-		        if (user != null) {
-		            Long logindata = user.getMemberDTO().getMember_id();
-		            boolean liked = (revDao.existsLike(review.getReview_id(), logindata) == 1);
-		            review.setReview_liked(liked);
-		            System.out.println("reviewLiked=" + liked + " memberId=" + logindata);
-		        } else {
-		            review.setReview_liked(false);
-		        }
-		    }
+		for (ReviewBoardDTO review : revlist) {
+			if (review != null) { // ✅ 안전한 null 체크
+				review.setReview_like(revDao.countLike(review.getReview_id()));
+
+				if (user != null) {
+					Long logindata = user.getMemberDTO().getMember_id();
+					boolean liked = (revDao.existsLike(review.getReview_id(), logindata) == 1);
+					review.setReview_liked(liked);
+					System.out.println("reviewLiked=" + liked + " memberId=" + logindata);
+				} else {
+					review.setReview_liked(false);
+				}
+			}
 		}
 
 		model.addAttribute("revlist", revlist);
 
-		
-		
 		return "Detailpage";
 	}
-	
-	
+
 	@GetMapping("/seller/update.do")
-	public String productUpdate(
-			@AuthenticationPrincipal CustomUserDetails userDetails,
-			@RequestParam("prod_id") Long prod_id,
-			ProductDTO productDTO, Model model) {
+	public String productUpdate(@AuthenticationPrincipal CustomUserDetails userDetails,
+			@RequestParam("prod_id") Long prod_id, ProductDTO productDTO, Model model) {
 		Long login_id = userDetails.getMemberDTO().getMember_id();
-		
+
 		productDTO = proDao.selectProductView(prod_id);
 		Long write_id = productDTO.getMember_id();
-		
+
 		try {
-			
-			if(login_id == write_id && login_id != null && write_id != null) {
+
+			if (login_id == write_id && login_id != null && write_id != null) {
 				model.addAttribute("productDTO", productDTO);
 				ArrayList<ProductImgDTO> imglist = imgDao.selectAllImg(prod_id);
 				model.addAttribute("last_idx", imglist.size());
 				model.addAttribute("imglist", imglist);
 				return "seller/productUpdate";
 			}
-			
-		}
-		catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("로긴아이디 : " + ((login_id!=null) ? login_id : "null"));
-			System.out.println("작성자아이디 : " + ((write_id!=null) ?login_id : "null"));
+			System.out.println("로긴아이디 : " + ((login_id != null) ? login_id : "null"));
+			System.out.println("작성자아이디 : " + ((write_id != null) ? login_id : "null"));
 		}
-			
-			
+
 		return "redirect:/";
 	}
-	
+
 	@PostMapping("/seller/update.do")
 	@ResponseBody
-	public int productUpdate2(ProductDTO productDTO,
-	        @RequestParam("main_idx") Long main_idx,
-	        @RequestParam("image") List<MultipartFile> files,
-	        @RequestParam("last_idx") Long last_idx) { 
-		
-		productDTO.setProd_content(productDTO.getProd_content()
-				.replaceAll("\r\n", "<br/>"));
-	    int prod_result = proDao.productUpdate(productDTO);
-	    Long prod_id = productDTO.getProd_id();
+	public int productUpdate2(ProductDTO productDTO, @RequestParam("main_idx") Long main_idx,
+			@RequestParam("image") List<MultipartFile> files, @RequestParam("last_idx") Long last_idx) {
 
+		productDTO.setProd_content(productDTO.getProd_content().replaceAll("\r\n", "<br/>"));
+		int prod_result = proDao.productUpdate(productDTO);
+		Long prod_id = productDTO.getProd_id();
 
-	    
-	    	
-	    /*
-	    이미지 변경 과정 :
-	    	수정폼으로 이동 및 게시물 불러오기(완료)
-	    	수정폼에서 게시물 및 이미지 추가 및 삭제
-	    		-> 삭제 구현방법 삭제버튼에 인덱스를 넣고 버튼클릭시 인덱스가 전달되고
-	    			인덱스에 해당하는 이미지 삭제 => prod_id와 idx를 조건으로 걸어야될듯
-	    			만약 이미지가 추가 된다면? 삭제를 비동기로 바로 처리하게 하면될듯?
-	    			또다른문제. 인덱스는 기존 이미지들의 인덱스 다음 숫자를 오게할 수 있을것인가? 
-	    			가능한지 확인해봐야됨
-	    	메인인덱스 수정구현 
-	    		-> 방식은 모든main인덱스를 0으로 만들고
-	    			프론트에서 받은 main_idx의 사진의 메인인덱스 활성화(1)
-	    	
-	     */
-	    if(!files.isEmpty()) {
-	    	insertImg(prod_id, main_idx, files, last_idx);	    	
-	    }
-	    
-	    int UMI = updateMainImage(prod_id, main_idx);
-	    if(UMI > 0) System.out.println("메인 이미지 업데이트 완료");
+		/*
+		 * 이미지 변경 과정 : 수정폼으로 이동 및 게시물 불러오기(완료) 수정폼에서 게시물 및 이미지 추가 및 삭제 -> 삭제 구현방법 삭제버튼에
+		 * 인덱스를 넣고 버튼클릭시 인덱스가 전달되고 인덱스에 해당하는 이미지 삭제 => prod_id와 idx를 조건으로 걸어야될듯 만약 이미지가
+		 * 추가 된다면? 삭제를 비동기로 바로 처리하게 하면될듯? 또다른문제. 인덱스는 기존 이미지들의 인덱스 다음 숫자를 오게할 수 있을것인가?
+		 * 가능한지 확인해봐야됨 메인인덱스 수정구현 -> 방식은 모든main인덱스를 0으로 만들고 프론트에서 받은 main_idx의 사진의 메인인덱스
+		 * 활성화(1)
+		 * 
+		 */
+		if (!files.isEmpty()) {
+			insertImg(prod_id, main_idx, files, last_idx);
+		}
 
-	    
-	    
-	    if (prod_result == 1) {
-	        System.out.println("상품 수정에 성공했습니다.");
-	        return 200;
-	    } else {
-	        System.out.println("상품 수정신청에 실패했습니다. : " + prod_result);
-	        return 500;
-	    }
+		int UMI = updateMainImage(prod_id, main_idx);
+		if (UMI > 0)
+			System.out.println("메인 이미지 업데이트 완료");
+
+		if (prod_result == 1) {
+			System.out.println("상품 수정에 성공했습니다.");
+			return 200;
+		} else {
+			System.out.println("상품 수정신청에 실패했습니다. : " + prod_result);
+			return 500;
+		}
 
 	}
-	
+
 	public int updateMainImage(Long prod_id, Long main_idx) {
-		
+
 		int zero = imgDao.makeZero(prod_id);
 		int result = 0;
-		if(zero > 0) {
+		if (zero > 0) {
 			result = imgDao.updateMainImg(prod_id, main_idx);
 		}
 		return result;
 	}
-	
-	
+
 	@PostMapping("/seller/delete.do")
-	public String deleteProduct(@RequestParam("prod_id") Long prod_id){
-	    try {
-	    	System.out.println("prod_id : " + prod_id);
-	        // DB에서 모든 파일명 조회
-	        List<String> filenames = imgDao.selectAllFilenames(prod_id);
+	public String deleteProduct(@RequestParam("prod_id") Long prod_id) {
+		try {
+			System.out.println("prod_id : " + prod_id);
+			// DB에서 모든 파일명 조회
+			List<String> filenames = imgDao.selectAllFilenames(prod_id);
 
-	        // 실제 파일 삭제
-	        String uploadDir = ResourceUtils.getFile("classpath:static/uploads/prodimg/prod_id")
-	                                        .toPath().toString();
-	        File dir = new File(uploadDir, String.valueOf(prod_id));
-	        for (String filename : filenames) {
-	            File file = new File(dir, filename);
-	            if (file.exists()) {
-	                file.delete();
-	            }
-	        }
+			// 실제 파일 삭제
+			String uploadDir = ResourceUtils.getFile("classpath:static/uploads/prodimg/prod_id").toPath().toString();
+			File dir = new File(uploadDir, String.valueOf(prod_id));
+			for (String filename : filenames) {
+				File file = new File(dir, filename);
+				if (file.exists()) {
+					file.delete();
+				}
+			}
 
-	        // DB 데이터 삭제
-	        int img_result = imgDao.deleteAllImg(prod_id);
-	        int prod_result = proDao.productDelete(prod_id);
+			// DB 데이터 삭제
+			int img_result = imgDao.deleteAllImg(prod_id);
+			int prod_result = proDao.productDelete(prod_id);
 
-	        if(prod_result == 1 && img_result >= 0) {
-	            System.out.println("상품 삭제가 완료되었습니다.");
-	        } else {
-	            System.out.println("상품 삭제에 실패하였습니다.");
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+			if (prod_result == 1 && img_result >= 0) {
+				System.out.println("상품 삭제가 완료되었습니다.");
+			} else {
+				System.out.println("상품 삭제에 실패하였습니다.");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-	    return "redirect:mylist.do?prod_id=" + prod_id;
+		return "redirect:mylist.do?prod_id=" + prod_id;
 	}
-	
-	
+
 	@PostMapping("/seller/deleteImg.do")
 	@ResponseBody
-	public String deleteImg(
-	        @RequestParam("prod_id") Long prod_id,
-	        @RequestParam("idx") Long idx) {
-	    try {
-	        // DB에서 파일명 조회	
-	        String filename = imgDao.selectFilename(prod_id, idx);
-	        if (filename != null) {
-	            // 실제 파일 경로 지정
-	            String uploadDir = ResourceUtils.getFile("classpath:static/uploads/prodimg/prod_id")
-	                                            .toPath().toString();
-	            File dir = new File(uploadDir, String.valueOf(prod_id));
-	            File file = new File(dir, filename);
+	public String deleteImg(@RequestParam("prod_id") Long prod_id, @RequestParam("idx") Long idx) {
+		try {
+			// DB에서 파일명 조회
+			String filename = imgDao.selectFilename(prod_id, idx);
+			if (filename != null) {
+				// 실제 파일 경로 지정
+				String uploadDir = ResourceUtils.getFile("classpath:static/uploads/prodimg/prod_id").toPath()
+						.toString();
+				File dir = new File(uploadDir, String.valueOf(prod_id));
+				File file = new File(dir, filename);
 
-	            // 파일 삭제
-	            if (file.exists()) {
-	                boolean deleted = file.delete();
-	                System.out.println("파일 삭제 여부: " + deleted);
-	            }
-	        }
+				// 파일 삭제
+				if (file.exists()) {
+					boolean deleted = file.delete();
+					System.out.println("파일 삭제 여부: " + deleted);
+				}
+			}
 
-	        // DB 레코드 삭제
-	        int result = imgDao.deleteImg(prod_id, idx);
-	        return (result > 0) ? "success" : "fail";
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return "error";
-	    }
+			// DB 레코드 삭제
+			int result = imgDao.deleteImg(prod_id, idx);
+			return (result > 0) ? "success" : "fail";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
 	}
-	
-	
+
 }

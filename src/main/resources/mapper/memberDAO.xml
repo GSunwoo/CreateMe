@@ -3,45 +3,45 @@
    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.farm.member.mapper.IMemberMapper">
+<mapper namespace="com.member.mapper.IMemberMapper">
 
-	<select id="loginCheck" resultType="com.farm.member.dto.MemberDTO">
+	<select id="loginCheck" resultType="com.member.dto.MemberDTO">
 		SELECT user_id, user_pw,
 		user_type, enable, member_id
 		FROM member WHERE user_id = #{userId}
 	</select>
 
 	<select id="selectBuyerData"
-		parameterType="com.farm.member.dto.MemberDTO"
-		resultType="com.farm.member.dto.MemberDTO">
+		parameterType="com.member.dto.MemberDTO"
+		resultType="com.member.dto.MemberDTO">
 		SELECT user_id, user_pw, user_type, enable, phone_num,
 		name, emailid, emaildomain, member_id, trust_score, regidate
 		FROM member
 		WHERE user_id = #{user_id}
 	</select>
 	<select id="selectSellerData"
-		parameterType="com.farm.member.dto.MemberDTO"
-		resultType="com.farm.member.dto.MemberDTO">
+		parameterType="com.member.dto.MemberDTO"
+		resultType="com.member.dto.MemberDTO">
 		SELECT user_id, user_pw, user_type, enable, phone_num,
 		name, emailid, emaildomain, member_id, regidate
 		FROM member
 		WHERE user_id = #{user_id}
 	</select>
 
-	<select id="selectAddress" resultType="com.farm.member.dto.AddressDTO">
+	<select id="selectAddress" resultType="com.member.dto.AddressDTO">
 		SELECT *
 		FROM address
 		WHERE member_id=#{member_id}
 	</select>
 	<select id="selectAddressMain"
-		resultType="com.farm.member.dto.AddressDTO">
+		resultType="com.member.dto.AddressDTO">
 		SELECT *
 		FROM address
 		WHERE member_id=#{member_id} AND main=1
 	</select>
 
 	<insert id="insertAddress"
-		parameterType="com.farm.member.dto.AddressDTO">
+		parameterType="com.member.dto.AddressDTO">
 		INSERT INTO address (zipcode, addr1, addr2, main, member_id)
 		VALUES (#{zipcode}, #{addr1}, #{addr2}, #{main}, #{member_id})
 	</insert>

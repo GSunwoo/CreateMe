@@ -3,16 +3,16 @@
    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.farm.service.IPurchaseService">
+<mapper namespace="com.purchase.mapper.IPurchaseService">
 	<select id="selectProduct"
-		resultType="com.farm.dto.WishlistDTO">
+		resultType="com.wishlist.dto.WishlistDTO">
 		SELECT prod_name, prod_id, prod_price 
 		FROM product
 		WHERE prod_id = #{prod_id}
 	</select>
 	
 	<select id="selectProducts"
-		resultType="com.farm.dto.WishlistDTO">
+		resultType="com.wishlist.dto.WishlistDTO">
 		SELECT prod_name, pr.prod_id, prod_price, prod_qty
 		FROM wishlist wl
 		INNER JOIN product pr
@@ -24,12 +24,12 @@
 	</select>
 	
 	<insert id="insertPurchase"
-		parameterType="com.farm.dto.PurchaseDTO">
+		parameterType="com.purchase.dto.PurchaseDTO">
 	INSERT INTO purchase (order_num, prod_id, member_id, qty, purc_request)
 		VALUES (#{order_num}, #{prod_id}, #{member_id}, #{qty}, #{purc_request})
 	</insert>
 	
-	<insert id="insertPurchaseDummy" parameterType="com.farm.dto.PurchaseDTO">
+	<insert id="insertPurchaseDummy" parameterType="com.purchase.dto.PurchaseDTO">
 	    INSERT INTO purchase (
 	        order_num, prod_id, member_id, qty, purc_request, purc_date
 	    ) VALUES (

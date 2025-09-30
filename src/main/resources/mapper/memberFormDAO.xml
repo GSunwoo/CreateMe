@@ -3,22 +3,22 @@
    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.farm.member.mapper.IMemberFormMapper">
+<mapper namespace="com.member.mapper.IMemberFormMapper">
 	<insert id="registMember"
-		parameterType="com.farm.member.dto.MemberDTO">
+		parameterType="com.member.dto.MemberDTO">
 		INSERT INTO member (user_id, user_pw, user_type, phone_num, name, emailid, emaildomain)
 			VALUES (#{user_id}, #{user_pw}, #{user_type}, #{phone_num}, #{name}, #{emailid}, #{emaildomain})
 	</insert>
-	<insert id="registAddr" parameterType="com.farm.member.dto.AddressDTO">
+	<insert id="registAddr" parameterType="com.member.dto.AddressDTO">
 		INSERT INTO address (member_id, zipcode, addr1, addr2)
 			VALUES (#{member_id}, #{zipcode}, #{addr1}, #{addr2})
 	</insert>
-	<insert id="registFarm" parameterType="com.farm.dto.member.FarmDTO">
+	<insert id="registFarm" parameterType="com.member.dto.FarmDTO">
 		INSERT INTO farm (farm_id, member_id, account, brand_name, com_addr1, com_addr2, com_zip, owner_name, depositor)
 			VALUES (#{farm_id}, #{member_id}, #{account}, #{brand_name}, #{com_addr1}, #{com_addr2}, #{com_zip}, #{owner_name}, #{depositor})
 	</insert>
 	
-	<update id="updateMember" parameterType="com.farm.dto.member.MemberDTO">
+	<update id="updateMember" parameterType="com.member.dto.MemberDTO">
 		UPDATE member SET 
 			user_pw = #{user_pw},
 			name = #{name}, 
