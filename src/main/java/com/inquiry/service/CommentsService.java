@@ -1,5 +1,8 @@
 package com.inquiry.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,4 +52,67 @@ public class CommentsService {
 	        return 500;
 	    }
 	}
+	
+	public Map<String, String> loadComment(Long comId, Long memberId) {
+		// 반환할 HashMap 선언
+		Map<String, String> map = new HashMap<>();
+		
+		// 답변 불러오기
+		CommentsDTO commentsDTO = comDao.getComments(comId);
+		
+		// 답변의 작성자 id
+		Long writer_id = commentsDTO.getMember_id();
+		
+		// 현재 사용자와 작성자가 같은지 확인
+		if(memberId == writer_id) {
+			// 정상적인 사용일 경우, 200과 답변내용, 답변의 id를 map으로 만들어 반환
+			map.put("code", "200");
+			map.put("content", commentsDTO.getCom_content());
+			map.put("com_id", comId.toString());
+			return map;			
+		}
+		else {
+			// 현재 사용자와 작성자가 다를 경우 권한 부족으로 코드 403 반환
+			map.put("code", "403");
+			return map; 
+		}
+	}
+	
+	public int updateComment(CommentsDTO commentsDTO, Long memberId) {
+		try {
+			// 현재 사용자와 답변 작성자가 같을 경우 update
+			if(memberId == commentsDTO.getMember_id()) {
+				comDao.updateComments(commentsDTO);
+				return 200;
+			}
+			// 다르면 권한 부족으로 코드 403 반환
+			else {
+				return 403;
+			}
+		}
+		catch(Exception e) {
+			// 예외가 발생할 경우 코드 500 반환
+			return 500;	
+		}
+	}
+	
+	public int deleteComment(CommentsDTO commentsDTO, Long memberId) {
+		try {
+			// 현재 사용자와 답변 작성자가 같을 경우 delete
+			if(memberId == commentsDTO.getMember_id()) {
+				comDao.deleteComments(commentsDTO.getCom_id());
+				return 200;
+			}
+			// 다르면 권한 부족으로 코드 403 반환
+			else {
+				return 403;
+			}
+		}
+		catch(Exception e) {
+			// 예외가 발생할 경우 코드 500 반환
+			return 500;	
+		}
+	}
+	
+	
 }
