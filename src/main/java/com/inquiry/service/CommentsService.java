@@ -23,8 +23,9 @@ public class CommentsService {
 	@Transactional
 	public int insertComment(CommentsDTO commentsDTO, Long memberId) {
 		try {
+			// 답변을 작성할 문의 id 가져오기
 	        Long inquiry_id = commentsDTO.getInquiry_id();
-	        // 문의를 작성할 상품의 id 가져오기
+	        // 해당 문의의 상품의 id 가져오기
 	        Long prod_id = inqDao.selectProd_id(inquiry_id);
 	        // 불러온 상품의 판매자의 id 가져오기
 	        Long prod_mem_id = proDao.selectMember_id(prod_id);
