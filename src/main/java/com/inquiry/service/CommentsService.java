@@ -17,11 +17,11 @@ import jakarta.transaction.Transactional;
 public class CommentsService {
 	
 	@Autowired
-	ICommentsMapper comDao;
+	ICommentsMapper comDAO;
 	@Autowired
-	IProductMapper proDao;
+	IProductMapper proDAO;
 	@Autowired
-	IInquiryMapper inqDao;
+	IInquiryMapper inqDAO;
 	
 	@Transactional
 	public int insertComment(CommentsDTO commentsDTO, Long memberId) {
@@ -29,15 +29,15 @@ public class CommentsService {
 			// 답변을 작성할 문의 id 가져오기
 	        Long inquiry_id = commentsDTO.getInquiry_id();
 	        // 해당 문의의 상품의 id 가져오기
-	        Long prod_id = inqDao.selectProd_id(inquiry_id);
+	        Long prod_id = inqDAO.selectProd_id(inquiry_id);
 	        // 불러온 상품의 판매자의 id 가져오기
-	        Long prod_mem_id = proDao.selectMember_id(prod_id);
+	        Long prod_mem_id = proDAO.selectMember_id(prod_id);
 	        
 	        // 현재 작성자와 상품의 판매자가 같을 경우 답변 입력 가능
 	        if (memberId == prod_mem_id) {
 	            commentsDTO.setMember_id(memberId);
 	            // 답변 작성
-	            int result = comDao.insertComments(commentsDTO);
+	            int result = comDAO.insertComments(commentsDTO);
 	            if(result > 0) {
 	            	// 정상 작동
 	                return 200;
@@ -58,7 +58,7 @@ public class CommentsService {
 		Map<String, String> map = new HashMap<>();
 		
 		// 답변 불러오기
-		CommentsDTO commentsDTO = comDao.getComments(comId);
+		CommentsDTO commentsDTO = comDAO.getComments(comId);
 		
 		// 답변의 작성자 id
 		Long writer_id = commentsDTO.getMember_id();
@@ -82,7 +82,7 @@ public class CommentsService {
 		try {
 			// 현재 사용자와 답변 작성자가 같을 경우 update
 			if(memberId == commentsDTO.getMember_id()) {
-				comDao.updateComments(commentsDTO);
+				comDAO.updateComments(commentsDTO);
 				return 200;
 			}
 			// 다르면 권한 부족으로 코드 403 반환
@@ -100,7 +100,7 @@ public class CommentsService {
 		try {
 			// 현재 사용자와 답변 작성자가 같을 경우 delete
 			if(memberId == commentsDTO.getMember_id()) {
-				comDao.deleteComments(commentsDTO.getCom_id());
+				comDAO.deleteComments(commentsDTO.getCom_id());
 				return 200;
 			}
 			// 다르면 권한 부족으로 코드 403 반환
