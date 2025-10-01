@@ -23,6 +23,7 @@ public class CommentsService {
 	@Autowired
 	IInquiryMapper inqDAO;
 	
+	// 답변 작성
 	@Transactional
 	public int insertComment(CommentsDTO commentsDTO, Long memberId) {
 		try {
@@ -53,6 +54,7 @@ public class CommentsService {
 	    }
 	}
 	
+	// 답변 내용 불러오기(수정 시)
 	public Map<String, String> loadComment(Long comId, Long memberId) {
 		// 반환할 HashMap 선언
 		Map<String, String> map = new HashMap<>();
@@ -78,6 +80,7 @@ public class CommentsService {
 		}
 	}
 	
+	// 답변 수정
 	public int updateComment(CommentsDTO commentsDTO, Long memberId) {
 		try {
 			// 현재 사용자와 답변 작성자가 같을 경우 update
@@ -96,6 +99,7 @@ public class CommentsService {
 		}
 	}
 	
+	// 답변 삭제
 	public int deleteComment(CommentsDTO commentsDTO, Long memberId) {
 		try {
 			// 현재 사용자와 답변 작성자가 같을 경우 delete
