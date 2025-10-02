@@ -1,5 +1,6 @@
 package com.inquiry.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -118,5 +119,12 @@ public class CommentsService {
 		}
 	}
 	
+	// 해당 문의에 대한 답변 목록 불러오기
+	public ArrayList<CommentsDTO> getComments (Long inquiryId) {
+		
+		ArrayList<CommentsDTO> result = comDAO.selectComments(inquiryId);
+		
+		return result;
+	}
 	
 }

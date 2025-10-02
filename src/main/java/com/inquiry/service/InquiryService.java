@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.common.dto.PageDTO;
+import com.inquiry.dto.CommentsDTO;
 import com.inquiry.dto.InquiryDTO;
 import com.inquiry.mapper.IInquiryMapper;
 
@@ -42,6 +43,7 @@ public class InquiryService {
 		return result;
 	}
 	
+	// 문의 목록
 	public ArrayList<InquiryDTO> inquiryList(String type, PageDTO pageDTO, Long memberId){
 		ArrayList<InquiryDTO> result;
 		
@@ -55,4 +57,31 @@ public class InquiryService {
 		
 		return result;
 	}
+	
+	// 문의 상세내용
+	public InquiryDTO getInquiry (Long inquriyId, Long memberId) {
+		InquiryDTO result;
+		
+		// DAO의 인자로 사용할 DTO
+		InquiryDTO param = new InquiryDTO();
+		param.setInquiry_id(inquriyId);
+		param.setMember_id(memberId);
+
+		result = inqDAO.inquiryDetail(param); // 이미 Service/Mapper에 있음
+		
+		return result;
+	}
+	
+	// 문의 수정
+	public int updateInquiry(InquiryDTO inquiryDTO) {
+		int result = inqDAO.updateInquiry(inquiryDTO);;
+		return result;
+	}
+	
+	// 문의 삭제
+	public int deleteInquiry(Long inquiryId, Long memberId) {
+		int result = inqDAO.deleteInquiry(inquiryId, memberId);
+		return result;
+	}
+	
 }
