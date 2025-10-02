@@ -25,6 +25,7 @@ public class MemberController {
 		return "buyer/buyer_register";
 	}
 	
+	/*****************이거 하나로 통합(프론트 고칠 때 바꾸는걸로)**********************/
 	@PostMapping("/memberForm/seller.regist.do") // 서브밋 했을때 가입시켜주는
 	public String memberRegistSeller(MemberDTO memberDTO) {
 		String passwd = PasswordEncoderFactories.createDelegatingPasswordEncoder()
