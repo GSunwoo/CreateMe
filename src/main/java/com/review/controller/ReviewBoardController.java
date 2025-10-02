@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.common.dto.PageDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,92 +37,60 @@ import utils.UploadUtils;
 
 @Controller
 public class ReviewBoardController {
+	
+	@Autowired
+	   ReviewBoardMapper dao;
 
-
-	@Autowired
-	ReviewBoardMapper dao;
-
-	@Autowired
-	ReviewImgMapper Imgdao;
-	
-	@Autowired
-	private ObjectMapper objectMapper;
-	
-	@Autowired
-	private ReviewLikeMapper reviewLikeService;
-	
-	
-	
-	//목록
-	@GetMapping("/guest/review/list.do")
-	// HttpServletRequest : 사용자가 웹 페이지에서 서버에게 요청한 내용을 다 들고 있는 객체
-	public String list(Model model, HttpServletRequest req, ReviewBoardDTO reviewboardDTO, PageDTO pageDTO,
-			@AuthenticationPrincipal CustomUserDetails userDetails,
-			@RequestParam(name = "reviewPage", required = false, defaultValue = "5") int reviewPage) {
-		
-		pageDTO.setStart(1);
-		pageDTO.setEnd(20);
-		ArrayList<ReviewBoardDTO> lists = dao.listPage(pageDTO);
-		//일반리뷰
-		for(int i = 0 ; i < lists.size() ; i ++) {
-			ReviewBoardDTO review = lists.get(i);
-			review.setReview_like(dao.countLike(review.getReview_id()));
-			if(userDetails!=null) {
-				Long logindata = userDetails.getMemberDTO().getMember_id();
-				review.setReview_liked(dao.existsLike(review.getReview_id(), logindata)==1 ? true : false);
-				System.out.println(Boolean.toString(review.isReview_liked()) + " memberId : " + logindata);				
-			}
-			else {
-				review.setReview_liked(false);
-			}
-		}
-		model.addAttribute("reviewList", lists);
-		return "review/reviewPage";
-	}
-	
-	
+	   @Autowired
+	   ReviewImgMapper Imgdao;
+	   
+	   @Autowired
+	   private ObjectMapper objectMapper;
+	   
+	   @Autowired
+	   private ReviewLikeMapper reviewLikeService;
 
 	//무한스크롤
-	@RequestMapping("/guest/review/restApi.do")
-	@ResponseBody
-	public List<JSONObject> newList(PageDTO pageDTO, HttpServletRequest req, ReviewBoardDTO reviewboardDTO,
-			@AuthenticationPrincipal CustomUserDetails userDetails) {
-		int pageSize = 20;
-		int pageNum = req.getParameter("pageNum") == null ? 1 : Integer.parseInt(req.getParameter("pageNum"));
+	 @RequestMapping("/guest/review/restApi.do")
+	   @ResponseBody
+	   public List<JSONObject> newList(PageDTO pageDTO, HttpServletRequest req, ReviewBoardDTO reviewboardDTO,
+	         @AuthenticationPrincipal CustomUserDetails userDetails) {
+	      int pageSize = 20;
+	      int pageNum = req.getParameter("pageNum") == null ? 1 : Integer.parseInt(req.getParameter("pageNum"));
 
-		int start = (pageNum - 1) * pageSize + 1;
-		int end = pageNum * pageSize;
-		pageDTO.setStart(start);
-		pageDTO.setEnd(end);
+	      int start = (pageNum - 1) * pageSize + 1;
+	      int end = pageNum * pageSize;
+	      pageDTO.setStart(start);
+	      pageDTO.setEnd(end);
 
-		List<JSONObject> list = new ArrayList<>();
-		List<ReviewBoardDTO> selectReviewList = dao.listPage(pageDTO);
-		for(int i = 0 ; i < selectReviewList.size() ; i ++) {
-			ReviewBoardDTO review = selectReviewList.get(i);
-			review.setReview_like(dao.countLike(review.getReview_id()));
-			if(userDetails!=null) {
-				Long logindata = userDetails.getMemberDTO().getMember_id();
-				review.setReview_liked(dao.existsLike(review.getReview_id(), logindata)==1 ? true : false);
-				System.out.println(review.isReview_liked() + "memberId : " + logindata);				
-			}
-			else {
-				review.setReview_liked(false);
-			}
-		}
+	      List<JSONObject> list = new ArrayList<>();
+	      List<ReviewBoardDTO> selectReviewList = dao.listPage(pageDTO);
+	      for(int i = 0 ; i < selectReviewList.size() ; i ++) {
+	         ReviewBoardDTO review = selectReviewList.get(i);
+	         review.setReview_like(dao.countLike(review.getReview_id()));
+	         if(userDetails!=null) {
+	            Long logindata = userDetails.getMemberDTO().getMember_id();
+	            review.setReview_liked(dao.existsLike(review.getReview_id(), logindata)==1 ? true : false);
+	            System.out.println(review.isReview_liked() + "memberId : " + logindata);            
+	         }
+	         else {
+	            review.setReview_liked(false);
+	         }
+	      }
 
-		for (ReviewBoardDTO review : selectReviewList) {
-			Map<String, Object> reviewMap = objectMapper.convertValue(review, Map.class);
-			JSONObject reviewJSON = new JSONObject(reviewMap);
-			list.add(reviewJSON);
-		}
-		Map<String, Object> maps = new HashMap<String, Object>();
+	      for (ReviewBoardDTO review : selectReviewList) {
+	         Map<String, Object> reviewMap = objectMapper.convertValue(review, Map.class);
+	         JSONObject reviewJSON = new JSONObject(reviewMap);
+	         list.add(reviewJSON);
+	      }
+	      Map<String, Object> maps = new HashMap<String, Object>();
 
-		maps.put("pageSize", pageSize);
-		maps.put("pageNum", pageNum);
-		
-		return list;
+	      maps.put("pageSize", pageSize);
+	      maps.put("pageNum", pageNum);
+	      
+	      return list;
 
-	}
+	   }
 
 	// 열람
 	@GetMapping("/guest/review/view.do")
@@ -321,46 +288,5 @@ public class ReviewBoardController {
 		return result;
 	}
 
-	//수정
-	@GetMapping("/buyer/review/edit.do")
-	public String boardEditGet(Model model, ReviewBoardDTO reviewboardDTO) {
-		// 열람에서 사용했던 메서드를 그대로 사용
-		reviewboardDTO = dao.selectView(reviewboardDTO.getReview_id());
-		model.addAttribute("reviewboardDTO", reviewboardDTO);
-		return "seller/reviewPage";
-	}
-
-	//수정2 : 사용자가 입력한 내용을 전송하여 update 처리
-	@PostMapping("/buyer/review/edit.do")
-	public String boardEditPost(ReviewBoardDTO reviewboardDTO, @AuthenticationPrincipal CustomUserDetails userDetails,
-			RedirectAttributes redirectAttributes) {
-
-		try {
-			MemberDTO member = userDetails.getMemberDTO();
-
-			// 로그인된 사용자 ID 설정
-			reviewboardDTO.setMember_id(member.getMember_id());
-
-			// 상품 ID는 폼에서 받아와야 함 (hidden input 등으로)
-			// reviewboardDTO.setProd_id(실제값);
-
-			// 수정 실행
-			int result = dao.edit(reviewboardDTO);
-
-			if (result > 0) {
-				System.out.println("리뷰 수정 성공: " + result);
-				redirectAttributes.addFlashAttribute("message", "리뷰가 성공적으로 수정되었습니다.");
-			} else {
-				System.out.println("리뷰 수정 실패: " + result);
-				redirectAttributes.addFlashAttribute("error", "리뷰 수정에 실패했습니다.");
-			}
-
-		} catch (Exception e) {
-			System.err.println("리뷰 수정 중 오류 발생: " + e.getMessage());
-			redirectAttributes.addFlashAttribute("error", "시스템 오류가 발생했습니다.");
-		}
-
-		return "redirect:/guest/review/view.do?review_id=" + reviewboardDTO.getReview_id();
-	}
 
 }
