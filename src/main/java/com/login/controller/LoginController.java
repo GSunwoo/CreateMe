@@ -11,8 +11,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.common.dto.MailInfoDTO;
 import com.common.dto.PassFindDTO;
 import com.common.mapper.IPassFinderMapper;
+import com.etc.CustomRandomGenerator;
 import com.etc.PassFindMail;
-import com.etc.RandomPasswordGenerator;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -59,7 +59,7 @@ public class LoginController {
 			// 메일 제목 지정
 			mailInfoDTO.setSubject("[Farm To You] 새로운 비밀번호가 발급되었습니다.");
 			// 새로운 비밀번호 발급 및 인코딩
-			String newPw = RandomPasswordGenerator.generatePass(12);
+			String newPw = CustomRandomGenerator.generatePass(12);
 			// Bcrypt로 인코딩
 			String passwd = PasswordEncoderFactories.createDelegatingPasswordEncoder()
 					.encode(newPw);

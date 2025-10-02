@@ -9,7 +9,7 @@ import com.common.dto.MailInfoDTO;
 import com.common.dto.PassFindDTO;
 import com.common.mapper.IPassFinderMapper;
 import com.etc.PassFindMail;
-import com.etc.RandomPasswordGenerator;
+import com.etc.CustomRandomGenerator;
 
 import jakarta.transaction.Transactional;
 
@@ -28,7 +28,7 @@ public class PassFinderService {
             return false;
         }
         String email = passFindDTO.getEmailid() + "@" + passFindDTO.getEmaildomain();
-        String newPw = RandomPasswordGenerator.generatePass(12);
+        String newPw = CustomRandomGenerator.generatePass(12);
         String encodedPw = PasswordEncoderFactories.createDelegatingPasswordEncoder()
                 .encode(newPw)
                 .replace("{bcrypt}", "");

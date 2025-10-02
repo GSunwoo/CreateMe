@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.etc.CustomRandomGenerator;
 import com.login.config.CustomUserDetails;
 import com.purchase.dto.OrderCacheDTO;
 import com.purchase.dto.PayDTO;
@@ -52,7 +53,7 @@ public class PaymentController {
 		Long memberId = userDetails.getMemberDTO().getMember_id();
 		String userId = userDetails.getUsername();
 		// customerKey 제작 및 전달
-		String encoId = generateRandomString(memberId.toString()+userId,20);
+		String encoId = CustomRandomGenerator.generateRandomString(memberId.toString()+userId,20);
 		model.addAttribute("customerKey", encoId);
 		
 		// 주문정보 가공 및 전달
@@ -66,7 +67,7 @@ public class PaymentController {
 		LocalDateTime now = LocalDateTime.now();
 		String nowTime = now.toString();
 		String orderId = payDTO.getProd_name() + payDTO.getMember_id().toString() + nowTime;
-		String encOrderId = generateRandomString(orderId, 20);
+		String encOrderId = orderId;
 		
 		// toss payments API 형식에 맞춰 Map 생성
 		Map<String, String> orderInfo = new HashMap<>();
@@ -138,20 +139,5 @@ public class PaymentController {
 	public String fail() {
 		return "pay/fail";
 	}
-	
-	public static String generateRandomString(String input, int length) {
-        // 입력값의 해시코드를 시드로 사용
-        long seed = input.hashCode();
-        Random random = new Random(seed);
 
-        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < length; i++) {
-            int idx = random.nextInt(chars.length());
-            sb.append(chars.charAt(idx));
-        }
-
-        return sb.toString();
-    }
 }
