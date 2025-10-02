@@ -25,7 +25,6 @@ import com.common.dto.ParameterDTO;
 import com.common.dto.PassFindDTO;
 import com.common.mapper.IPassFinderMapper;
 import com.etc.PassFindMail;
-import com.etc.RandomPasswordGenerator;
 import com.login.config.CustomUserDetails;
 import com.member.dto.MemberDTO;
 import com.member.mapper.IMemberFormMapper;

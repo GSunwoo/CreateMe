@@ -10,12 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.etc.CustomRandomGenerator;
+import com.purchase.dto.OrderCacheDTO;
 import com.purchase.dto.PayDTO;
+import com.purchase.dto.PurchaseDTO;
 import com.purchase.mapper.IOrderCacheService;
 import com.purchase.mapper.IPayService;
 import com.purchase.mapper.IPurchaseService;
 import com.wishlist.dto.WishlistDTO;
 import com.wishlist.mapper.IWishlistMapper;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 
 @Service
 public class PurchaseService {
@@ -60,6 +65,52 @@ public class PurchaseService {
 		result.put("customerName", payDTO.getName()); // 구매자명
 		result.put("customerMobilePhone", payDTO.getPhone_num()); // 구매자 핸드폰번호
 		return result;
+	}
+	
+	
+	// 주문정보 임시저장
+	public void saveOrderCaches(List<Long> prodIds, String encOrderId, List<Integer> qtys, HttpServletRequest req) {
+		// 주문정보 임시저장
+		for(int i=0; i<prodIds.size(); i++) {
+			OrderCacheDTO orderCache = new OrderCacheDTO();
+			orderCache.setOrder_num(encOrderId);
+			orderCache.setProd_id(prodIds.get(i));
+			orderCache.setQty(qtys.get(i));
+			if(req.getParameterValues("wish_id")!=null) {
+				orderCache.setWish_id(Long.parseLong(req.getParameterValues("wish_id")[i]));
+			} 
+			else orderCache.setWish_id(0L);
+			
+			orderDAO.insertOrderCache(orderCache);
+		}
+	}
+	
+	// 임시저장된 주문정보 불러오기
+	public List<OrderCacheDTO> loadOrderCaches(String orderNum){
+		List<OrderCacheDTO> result = orderDAO.selectOrderCache(orderNum);
+		return result;
+	}
+	
+	// 주문하기
+	@Transactional
+	public void purchase(OrderCacheDTO cache, Long memberId, String orderNum) {
+		PurchaseDTO purchaseDTO = new PurchaseDTO();
+		purchaseDTO.setMember_id(memberId);
+		purchaseDTO.setOrder_num(orderNum);
+		purchaseDTO.setProd_id(cache.getProd_id());
+		purchaseDTO.setQty(cache.getQty());
+		purchaseDTO.setPurc_request("부재시 경비실에 맡겨주세요");
+		
+		// 구매테이블에 추가
+		purDAO.insertPurchase(purchaseDTO);
+		// 구매 후 남은 재고 감소
+		purDAO.updateQty(purchaseDTO.getProd_id(), cache.getQty());
+		// 캐시테이블의 임시정보 삭제
+		orderDAO.deleteOrderCache(orderNum);
+		// 장바구니에서 삭제
+		if(cache.getWish_id()!=null) {
+			wishDAO.deleteWishlist(cache.getWish_id());
+		}		
 	}
 	
 }
