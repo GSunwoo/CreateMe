@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.common.dto.ParameterDTO;
+import com.etc.CustomRandomGenerator;
 import com.login.config.CustomUserDetails;
 import com.member.dto.MemberDTO;
 import com.product.dto.ProductDTO;
@@ -110,7 +111,7 @@ public class MainController {
 	        newPurchaseDTO.setMember_id(md);
 	        newPurchaseDTO.setProd_id(seed.nextLong(13) + 2);
 	        
-	        String oN = PaymentController.generateRandomString(Integer.toString(i), 20);
+	        String oN = CustomRandomGenerator.generateRandomString(Integer.toString(i), 20);
 	        newPurchaseDTO.setOrder_num(oN);
 	        newPurchaseDTO.setQty(seed.nextInt(11) + 1);
 	        
